@@ -69,4 +69,195 @@
   .fl-lb { font-size: 10px; color: var(--mut); margin-bottom: 4px; text-transform: uppercase; }
   .fl-in { width: 100%; background: var(--bg); border: 1px solid var(--bord); border-radius: 6px; padding: 8px 11px; font-size: 13px; }
   .sal { background: rgba(0,184,122,.07); border-radius: 10px; padding: 12px; text-align: center; margin: 14px 0; }
-  .sal-a { font-family:
+  .sal-a { font-family: 'Unbounded', sans-serif; font-size: 22px; font-weight: 700; }
+  .btn { background: var(--acc); color: #000; font-weight: 700; padding: 10px; border-radius: 8px; border: none; width: 100%; cursor: pointer; }
+  .btn:disabled { opacity: 0.5; }
+  
+  .cin { margin-top: 20px; }
+  .step { background: var(--surf); border: 1px solid var(--bord); border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+  .step-done { background: rgba(0,184,122,.05); border-color: var(--acc); }
+  .step h4 { font-size: 14px; margin-bottom: 8px; }
+  .step p { font-size: 11px; color: var(--mut); }
+  
+  @media (max-width: 700px){
+    nav { padding: 12px; }
+    .screen { padding: 16px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Вахта<span>Про</span></div>
+  <div class="tabs">
+    <button class="tab active" onclick="show('home')">Обзор</button>
+    <button class="tab" onclick="show('worker')">Работник</button>
+    <button class="tab" onclick="show('foreman')">Нач. участка</button>
+    <button class="tab" onclick="show('hr')">HR</button>
+    <button class="tab" onclick="show('hire')">Приём</button>
+  </div>
+</nav>
+
+<!-- Обзор -->
+<div class="screen on" id="s-home">
+  <div class="sh">ВахтаПро — демо</div>
+  <div class="sd">Нажмите на роли, чтобы увидеть систему в действии</div>
+  <div class="stats">
+    <div class="stat"><span class="stat-n">−70%</span><div class="stat-l">Времени HR</div></div>
+    <div class="stat"><span class="stat-n">20 мин</span><div class="stat-l">Сверка вместо 3 дней</div></div>
+    <div class="stat"><span class="stat-n">0</span><div class="stat-l">Ручного ввода в enbek.kz</div></div>
+  </div>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <button class="btn" style="width: auto; padding: 12px 24px;" onclick="show('worker')">👷 Работник → табель</button>
+    <button class="btn" style="width: auto; background: var(--warn);" onclick="show('foreman')">📋 Нач. участка → бригада</button>
+    <button class="btn" style="width: auto; background: var(--acc2);" onclick="show('hr')">👩‍💼 HR → конфликты</button>
+    <button class="btn" style="width: auto;" onclick="show('hire')">📄 Приём работника</button>
+  </div>
+</div>
+
+<!-- Работник -->
+<div class="screen" id="s-worker">
+  <div class="sh">Интерфейс работника</div>
+  <div class="sd">Видит прогноз зарплаты и KPI. Отправляет данные начальнику участка.</div>
+  <div class="phone">
+    <div style="font-weight: 600; margin-bottom: 12px;">Асылбек, бригада №3</div>
+    <div class="fl"><div class="fl-lb">Смен (дней)</div><input class="fl-in" type="number" id="wd" value="12" oninput="calcWorker()"></div>
+    <div class="fl"><div class="fl-lb">Ночные часы</div><input class="fl-in" type="number" id="wn" value="40" oninput="calcWorker()"></div>
+    <div class="sal"><div class="sal-a" id="wsal">485 600 ₸</div><div style="font-size: 10px;">Прогноз зарплаты</div></div>
+    <button class="btn" id="sendBtn" onclick="sendTabel()">Отправить начальнику</button>
+  </div>
+</div>
+
+<!-- Нач. участка -->
+<div class="screen" id="s-foreman">
+  <div class="sh">Дашборд начальника участка</div>
+  <div class="sd">Консолидирует данные бригады, фиксирует KPI, передаёт в HR.</div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Сотрудник</th><th>Смены</th><th>Ночные</th><th>KPI</th><th>Статус</th><th></th></tr></thead>
+      <tbody id="brigadeTable">
+        <tr><td>Асылбек</td><td>12</td><td>40ч</td><td class="kpiVal">1.0</td><td><span class="dot d-ok"></span>Сдан</td><td><button class="badge" style="background:var(--acc);color:#fff;" onclick="confirmRow(this)">Подтвердить</button></td></tr>
+        <tr><td>Петров</td><td style="color:var(--bad)">15⚠</td><td>48ч</td><td class="kpiVal">0.7</td><td><span class="dot d-w"></span>Конфликт</td><td><button class="badge" style="background:var(--warn);" onclick="fixRow(this)">Исправить</button></td></tr>
+        <tr><td>Ернар</td><td>10</td><td>32ч</td><td class="kpiVal">1.0</td><td><span class="dot d-ok"></span>Сдан</td><td><button class="badge" style="background:var(--acc);color:#fff;" onclick="confirmRow(this)">Подтвердить</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="background:var(--surf); border:1px solid var(--bord); border-radius:12px; padding:16px;">
+    <div><strong>KPI бригады</strong> — по умолчанию 1.0. Начальник фиксирует только инциденты:</div>
+    <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;">
+      <button class="badge" style="background:var(--bad); color:#fff;" onclick="incident('Асылбек')">Асылбек — инцидент</button>
+      <button class="badge" style="background:var(--warn); color:#fff;" onclick="incident('Петров')">Петров — ТБ</button>
+      <button class="badge" style="background:var(--bad); color:#fff;" onclick="incident('Ернар')">Ернар — срыв сроков</button>
+    </div>
+  </div>
+</div>
+
+<!-- HR -->
+<div class="screen" id="s-hr">
+  <div class="sh">Дашборд HR</div>
+  <div class="sd">Видит только конфликты — не сверяет всё вручную.</div>
+  <div class="stats" style="grid-template-columns:1fr 1fr;">
+    <div class="stat"><span class="stat-n">87</span><div class="stat-l">Табелей получено</div></div>
+    <div class="stat"><span class="stat-n" id="conflictCount">2</span><div class="stat-l">Конфликтов</div></div>
+  </div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Сотрудник</th><th>Проблема</th><th></th></tr></thead>
+      <tbody id="conflictList">
+        <tr><td>Петров</td><td>15 смен, но в графике отпуск 10–20 мая</td><td><button onclick="resolveConflict(this)" class="badge" style="background:var(--acc);">Решить</button></td></tr>
+        <tr><td>Иванов</td><td>Переработка 48ч — нет подтверждения</td><td><button onclick="resolveConflict(this)" class="badge" style="background:var(--acc);">Решить</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Приём -->
+<div class="screen" id="s-hire">
+  <div class="sh">Приём нового работника</div>
+  <div class="sd">Служебка → апрув → данные по ИИН → готово.</div>
+  <div class="step" id="step1">
+    <h4>1. Нач. участка пишет служебку</h4>
+    <p>Ахметов Д.Н., слесарь, бригада №3</p>
+    <button class="badge" style="background:var(--acc);" onclick="approveStep(1)">✅ Апрув директора (симуляция)</button>
+  </div>
+  <div class="step" id="step2">
+    <h4>2. Данные кандидата</h4>
+    <input type="text" id="iin" placeholder="Введите ИИН" style="padding:6px; border:1px solid var(--bord); border-radius:6px;">
+    <button class="badge" style="background:var(--acc);" onclick="pullData()">Подтянуть из eGov</button>
+    <div id="iinData" style="margin-top:8px; font-size:11px;"></div>
+  </div>
+  <div class="step" id="step3">
+    <h4>3. Договор и регистрация в enbek.kz</h4>
+    <p class="sd">Договор отправлен работнику. После подписания enbek.kz обновится автоматически.</p>
+    <button class="btn" id="finalBtn" disabled onclick="complete()">Завершить приём</button>
+  </div>
+</div>
+
+<script>
+  function show(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+    document.getElementById('s-'+id).classList.add('on');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    const m={home:0,worker:1,foreman:2,hr:3,hire:4};
+    document.querySelectorAll('.tab')[m[id]].classList.add('active');
+  }
+  function calcWorker(){
+    let s=+document.getElementById('wd').value||0;
+    let n=+document.getElementById('wn').value||0;
+    let total=s*24000+n*1800;
+    document.getElementById('wsal').innerText=total.toLocaleString()+' ₸';
+  }
+  function sendTabel(){
+    document.getElementById('sendBtn').innerText='✓ Отправлено';
+    document.getElementById('sendBtn').disabled=true;
+  }
+  function confirmRow(btn){
+    btn.innerText='✓ Подтверждено';
+    btn.disabled=true;
+    btn.style.background='#ccc';
+  }
+  function fixRow(btn){
+    let row=btn.closest('tr');
+    row.cells[0].style.color='';
+    row.cells[1].innerHTML='10';
+    row.cells[4].innerHTML='<span class="dot d-ok"></span>Исправлен';
+    btn.innerText='✓ Исправлен';
+    btn.disabled=true;
+  }
+  function incident(name){
+    let rows=document.querySelectorAll('#brigadeTable tr');
+    for(let row of rows){
+      if(row.cells[0].innerText==name){
+        row.cells[3].innerText='0.7';
+        row.cells[3].style.color='var(--warn)';
+        break;
+      }
+    }
+  }
+  let conflictResolved=0;
+  function resolveConflict(btn){
+    btn.closest('tr').remove();
+    conflictResolved++;
+    let rem=2-conflictResolved;
+    document.getElementById('conflictCount').innerText=rem;
+  }
+  let step=0;
+  function approveStep(n){
+    document.getElementById('step1').classList.add('step-done');
+    step=1;
+  }
+  function pullData(){
+    let iin=document.getElementById('iin').value;
+    if(!iin) return;
+    document.getElementById('iinData').innerHTML='<span class="badge-ok" style="padding:4px;">✓ Данные подтянуты: Ахметов Данияр, 15.03.1991, удост. №052847163</span>';
+    step=2;
+    if(step>=2) document.getElementById('finalBtn').disabled=false;
+  }
+  function complete(){
+    alert('✅ Работник принят. Договор в enbek.kz отправлен автоматически.');
+  }
+  window.onload=calcWorker;
+</script>
+</body>
+</html>
