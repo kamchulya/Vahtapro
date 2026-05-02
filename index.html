@@ -15,7 +15,6 @@
     --mut: #6b7280;
     --bord: #e2ddd5;
     --surf: #ffffff;
-    --warm: #f0ede6;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -40,7 +39,6 @@
   .logo span { color: var(--txt); }
   .nav-cta {
     background: var(--acc); color: #fff;
-    font-family: 'Golos Text', sans-serif;
     font-size: 14px; font-weight: 600;
     padding: 10px 22px; border-radius: 8px;
     border: none; cursor: pointer; text-decoration: none;
@@ -84,20 +82,18 @@
   .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
   .btn-primary {
     background: var(--acc); color: #fff;
-    font-family: 'Golos Text', sans-serif;
     font-size: 15px; font-weight: 700;
     padding: 14px 28px; border-radius: 10px;
     border: none; cursor: pointer; text-decoration: none;
-    display: inline-block; transition: all .2s;
+    display: inline-block;
   }
-  .btn-primary:hover { background: var(--acc2); transform: translateY(-1px); }
+  .btn-primary:hover { background: var(--acc2); }
   .btn-secondary {
     background: transparent; color: var(--txt);
-    font-family: 'Golos Text', sans-serif;
     font-size: 15px; font-weight: 600;
     padding: 14px 28px; border-radius: 10px;
     border: 1.5px solid var(--bord); cursor: pointer;
-    text-decoration: none; display: inline-block; transition: all .2s;
+    text-decoration: none; display: inline-block;
   }
   .btn-secondary:hover { border-color: var(--acc); color: var(--acc); }
   .hero-card {
@@ -147,111 +143,11 @@
   }
   .sec-sub { font-size: 16px; color: var(--mut); line-height: 1.6; max-width: 600px; margin-bottom: 40px; }
   
-  /* Тарифы */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 20px;
-  }
-  .price-card {
-    background: var(--surf);
-    border: 1px solid var(--bord);
-    border-radius: 20px;
-    padding: 28px;
-    transition: all .2s;
-    position: relative;
-  }
-  .price-card.popular {
-    border-color: var(--acc);
-    box-shadow: 0 10px 30px rgba(0,184,122,.1);
-  }
-  .popular-badge {
-    position: absolute;
-    top: -12px;
-    left: 20px;
-    background: var(--acc);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 12px;
-    border-radius: 20px;
-  }
-  .price-title {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .price-desc {
-    font-size: 12px;
-    color: var(--mut);
-    margin-bottom: 24px;
-  }
-  .price-amount {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 32px;
-    font-weight: 900;
-    color: var(--dark);
-    margin-bottom: 4px;
-  }
-  .price-amount span {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--mut);
-  }
-  .price-period {
-    font-size: 12px;
-    color: var(--mut);
-    margin-bottom: 24px;
-  }
-  .price-features {
-    list-style: none;
-    margin-bottom: 28px;
-  }
-  .price-features li {
-    font-size: 13px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--bord);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .price-features li::before {
-    content: "✓";
-    color: var(--acc);
-    font-weight: 700;
-  }
-  .price-btn {
-    width: 100%;
-    background: var(--acc);
-    color: #fff;
-    font-weight: 700;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
-    transition: all .2s;
-  }
-  .price-btn.outline {
-    background: transparent;
-    border: 1.5px solid var(--bord);
-    color: var(--txt);
-  }
-  .price-btn:hover {
-    background: var(--acc2);
-    color: #fff;
-  }
-  
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .pillar {
     background: var(--surf);
     border: 1px solid var(--bord);
     border-radius: 16px; padding: 28px;
-    transition: box-shadow .2s;
   }
   .pillar-num {
     font-family: 'Unbounded', sans-serif;
@@ -324,6 +220,116 @@
   }
   .tech-item h4 { font-size: 14px; margin-bottom: 6px; }
   .tech-item p { font-size: 12px; color: var(--mut); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .price-card {
+    background: var(--surf);
+    border: 1px solid var(--bord);
+    border-radius: 20px;
+    padding: 28px;
+  }
+  .price-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .price-amount {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--dark);
+    margin: 16px 0 4px;
+  }
+  .price-amount span {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--mut);
+  }
+  .price-period {
+    font-size: 13px;
+    color: var(--mut);
+    margin-bottom: 20px;
+  }
+  .price-features {
+    list-style: none;
+    margin: 20px 0;
+  }
+  .price-features li {
+    font-size: 13px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--bord);
+    display: flex;
+    gap: 8px;
+  }
+  .price-features li::before {
+    content: "✓";
+    color: var(--acc);
+    font-weight: 700;
+  }
+  .price-btn {
+    width: 100%;
+    background: var(--acc);
+    color: #fff;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .price-btn.outline {
+    background: transparent;
+    border: 1.5px solid var(--bord);
+    color: var(--txt);
+  }
+  
+  .setup-wrap {
+    margin-top: 40px;
+    background: var(--surf);
+    border-radius: 20px;
+    border: 1px solid var(--bord);
+    padding: 28px;
+  }
+  .setup-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .setup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .setup-item {
+    border-left: 3px solid var(--acc);
+    padding-left: 16px;
+  }
+  .setup-price {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 8px 0;
+  }
+  .setup-desc {
+    font-size: 12px;
+    color: var(--mut);
+  }
+  .setup-note {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--acc);
+    background: rgba(0,184,122,.08);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+  }
   
   @media (max-width: 860px) {
     nav { padding: 16px 20px; }
@@ -332,9 +338,10 @@
     .section { padding: 32px 20px; }
     .pillars { grid-template-columns: 1fr; }
     .how-grid { grid-template-columns: 1fr 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; }
     .ai-block { grid-template-columns: 1fr; padding: 32px; }
     .tech-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .setup-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -349,7 +356,7 @@
   <div class="hero-left">
     <div class="hero-tag">Для компаний с вахтой · Казахстан</div>
     <h1>Табели. KPI. Кадры. <em>Автоматически.</em><br>+ AI Онбординг</h1>
-    <p>Работник подтверждает выходы с телефона. Начальник участка проверяет (не вносит). HR видит только конфликты. Enbek.kz заполняется сам. А новый сотрудник получает умного ассистента по документам компании.</p>
+    <p>Начальник участка консолидирует данные бригады и передаёт в HR. HR видит только конфликты. Enbek.kz заполняется сам. А новый сотрудник получает умного ассистента по документам компании.</p>
     <div class="hero-btns">
       <a href="demo.html" class="btn-primary" target="_blank">Попробовать демо</a>
       <a href="mailto:support@lunatargetai.com" class="btn-secondary">Связаться</a>
@@ -365,117 +372,110 @@
   </div>
 </div>
 
-<!-- Тарифы (с учетом Doodocs) -->
-<div class="section">
-  <div class="sec-label">Инвестиции в автоматизацию</div>
-  <div class="sec-h">Прозрачные тарифы</div>
-  <div class="sec-sub">Включена биометрическая подпись документов (Doodocs), AI-ассистент и интеграция с 1С.</div>
-  
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-title">Базовый</div>
-      <div class="price-desc">для бригад до 100 чел</div>
-      <div class="price-amount">119 000 ₸<span>/мес</span></div>
-      <div class="price-period">+ 1 500 ₸ за сотрудника</div>
-      <ul class="price-features">
-        <li>Табель + KPI</li>
-        <li>Служебки + апрув</li>
-        <li>Интеграция с 1С (обмен)</li>
-        <li>Подпись документов (до 50/мес)</li>
-      </ul>
-      <a href="demo.html" class="price-btn outline" target="_blank">Выбрать</a>
-    </div>
-    <div class="price-card popular">
-      <div class="popular-badge">Самый популярный</div>
-      <div class="price-title">Профессиональный</div>
-      <div class="price-desc">для вахт 100–300 чел</div>
-      <div class="price-amount">229 000 ₸<span>/мес</span></div>
-      <div class="price-period">+ 1 200 ₸ за сотрудника</div>
-      <ul class="price-features">
-        <li>Все функции Базового</li>
-        <li><strong>AI Онбординг-бот</strong> (чат с документами)</li>
-        <li>Безлимитная подпись документов</li>
-        <li>Приоритетная техподдержка</li>
-      </ul>
-      <a href="demo.html" class="price-btn" target="_blank">Выбрать</a>
-    </div>
-    <div class="price-card">
-      <div class="price-title">Корпоративный</div>
-      <div class="price-desc">от 300+ сотрудников</div>
-      <div class="price-amount">Индивидуально</div>
-      <div class="price-period">Персональный расчет</div>
-      <ul class="price-features">
-        <li>Всё из Профессионального</li>
-        <li>Выделенный сервер в РК</li>
-        <li>Кастомизация интеграций</li>
-        <li>SLA 99.9%</li>
-      </ul>
-      <a href="mailto:support@lunatargetai.com" class="price-btn outline">Связаться</a>
-    </div>
-  </div>
-</div>
-
 <!-- Три боли -->
 <div class="section">
   <div class="sec-label">Что автоматизируем</div>
   <div class="sec-h">Три главные боли — одна система</div>
   <div class="sec-sub">Работает поверх вашей 1С. HR не делает лишней работы.</div>
   <div class="pillars">
-    <div class="pillar"><div class="pillar-num">01</div><h3>Табели и KPI</h3><p>Работник сам отмечает смены. Начальник участка проверяет, а не заполняет. HR видит только конфликты. Автоматическая сверка с графиком отпусков.</p></div>
-    <div class="pillar"><div class="pillar-num">02</div><h3>Приём, перевод, отпуск</h3><p>Служебка с телефона → апрув директора → данные из eGov по ИИН → договор подписывается биометрией. Enbek.kz обновляется сам.</p></div>
-    <div class="pillar"><div class="pillar-num">03</div><h3>AI Онбординг (Новое!)</h3><p>Сотрудник задаёт вопросы чат-боту на естественном языке: "Сколько платят за ночные?", "Где столовая?", "Кто мой бригадир?". Бот отвечает на основе ваших внутренних документов (Положения, СОУТ, Колдоговор).</p></div>
+    <div class="pillar"><div class="pillar-num">01</div><h3>Табели и KPI</h3><p>Начальник участка собирает данные по бригаде, система автоматически сверяет с графиком и отпусками. HR проверяет только расхождения. KPI по умолчанию 1.0, начальник фиксирует только инциденты.</p></div>
+    <div class="pillar"><div class="pillar-num">02</div><h3>Приём, перевод, отпуск</h3><p>Служебка с телефона → апрув директора → данные из eGov по ИИН. Договор подписывается удалённо. Enbek.kz обновляется без участия HR.</p></div>
+    <div class="pillar"><div class="pillar-num">03</div><h3>AI Онбординг</h3><p>Сотрудник задаёт вопросы чат-боту: "Сколько платят за ночные?", "Где столовая?", "Кто мой бригадир?". Бот отвечает на основе ваших внутренних документов.</p></div>
   </div>
 </div>
 
-<!-- AI Онбординг блок -->
+<!-- AI Онбординг -->
 <div class="section" style="padding-top:0;">
   <div class="ai-block">
     <div class="ai-left">
       <div class="ai-badge">Новый уровень адаптации</div>
       <h3>Цифровой ассистент<br>для каждого сотрудника</h3>
-      <p>Забудьте про бесконечные вопросы «Кто мой наставник?», «Как заполнить табель?», «Когда аванс?». Чат-бот на основе AI обучается на документах вашей компании и отвечает 24/7.</p>
-      <p>Работник заходит в свой кабинет (или Telegram/WhatsApp) и просто спрашивает. Экономия времени HR до 15 часов в месяц.</p>
+      <p>Забудьте про бесконечные вопросы. Чат-бот на основе AI обучается на документах вашей компании и отвечает 24/7.</p>
+      <p>Работник заходит в свой кабинет (или Telegram) и просто спрашивает. Экономия времени HR до 15 часов в месяц.</p>
     </div>
     <div class="chat-mock">
       <div class="chat-msg">👤 Работник: Сколько доплачивают за ночные смены в бригаде №3?</div>
-      <div class="chat-msg bot">🤖 AI Ассистент: Согласно Положению об оплате труда (п. 4.2), за каждый час ночной смены (22:00–06:00) доплата составляет 50% от часовой ставки. В бригаде №3 — 1 800 ₸/час.</div>
+      <div class="chat-msg bot">🤖 AI Ассистент: Согласно Положению об оплате труда (п. 4.2), доплата за ночные часы (22:00–06:00) составляет 50% от часовой ставки.</div>
       <div class="chat-msg">👤 Работник: Где находится медпункт?</div>
-      <div class="chat-msg bot">🤖 AI Ассистент: Медицинский пункт расположен в модуле Б, 1 этаж. График: круглосуточно. Телефон дежурного фельдшера: +7 777 123 45 67.</div>
+      <div class="chat-msg bot">🤖 AI Ассистент: Медицинский пункт в модуле Б, 1 этаж. Круглосуточно. Телефон: +7 777 123 45 67.</div>
     </div>
   </div>
 </div>
 
-<!-- Как работает (5 шагов) -->
+<!-- Как работает -->
 <div class="section" style="padding-top:0;">
   <div class="sec-label">Сквозной процесс</div>
   <div class="sec-h">5 шагов — никто не вводит данные дважды</div>
   <div class="how-grid">
-    <div class="how-step"><div class="how-num">1</div><div class="how-role">Работник</div><div class="how-desc">Отправляет табель + спрашивает у AI бота про условия</div></div>
-    <div class="how-step"><div class="how-num">2</div><div class="how-role">Нач. участка</div><div class="how-desc">Проверяет бригаду, фиксирует инциденты (KPI)</div></div>
+    <div class="how-step"><div class="how-num">1</div><div class="how-role">Нач. участка</div><div class="how-desc">Консолидирует данные бригады, передаёт в HR</div></div>
+    <div class="how-step"><div class="how-num">2</div><div class="how-role">Система</div><div class="how-desc">Авто-сверка с графиком и отпусками</div></div>
     <div class="how-step"><div class="how-num">3</div><div class="how-role">HR</div><div class="how-desc">Видит только конфликты, нажимает «Одобрить»</div></div>
-    <div class="how-step"><div class="how-num">4</div><div class="how-role">Бухгалтер</div><div class="how-desc">Данные в 1C уже верные. Начисляет без нервов</div></div>
-    <div class="how-step"><div class="how-num">5</div><div class="how-role">Enbek.kz</div><div class="how-desc">Обновляется автоматически (API/Безопасный RPA). HR не участвует.</div></div>
+    <div class="how-step"><div class="how-num">4</div><div class="how-role">Бухгалтер</div><div class="how-desc">Данные в 1С уже верные. Начисляет без нервов</div></div>
+    <div class="how-step"><div class="how-num">5</div><div class="how-role">Enbek.kz</div><div class="how-desc">Обновляется автоматически. HR не участвует</div></div>
   </div>
 </div>
 
-<!-- Техническая совместимость (Конкретика для 1С) -->
+<!-- Техническая совместимость -->
 <div class="section" style="padding-top:0;">
   <div class="tech-grid">
-    <div class="tech-item">
-      <h4>⚡ 1С: Предприятие (РК)</h4>
-      <p>Интеграция через защищённый REST API или файловый обмен (XML/Excel). Поддерживаем 1С:ЗУП, 1С:ERP, 1С:Бухгалтерию. Настройка "под ключ" за 2 недели.</p>
+    <div class="tech-item"><h4>⚡ 1С: Предприятие (РК)</h4><p>Интеграция через REST API или файловый обмен. Поддерживаем 1С:ЗУП, 1С:ERP, 1С:Бухгалтерию.</p></div>
+    <div class="tech-item"><h4>📄 Юридическая чистота</h4><p>Удалённая подпись документов имеет силу ЭЦП по закону РК. Данные обрабатываются по 27-й статье закона "Об информатизации".</p></div>
+    <div class="tech-item"><h4>🤖 Enbek.kz без рисков</h4><p>На старте — RPA-робот, при масштабировании — прямая интеграция с Минтруда. Регистрация договора в день подписания.</p></div>
+    <div class="tech-item"><h4>🔒 Безопасность и локализация</h4><p>Хостинг на серверах в РК (г. Астана). Резервное копирование каждые 6 часов.</p></div>
+  </div>
+</div>
+
+<!-- Тарифы -->
+<div class="section" style="padding-top:0;">
+  <div class="sec-label">Инвестиции в автоматизацию</div>
+  <div class="sec-h">Прозрачные тарифы</div>
+  <div class="sec-sub">Ежемесячная плата зависит только от численности. Никаких скрытых платежей.</div>
+  
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-title">Базовый</div>
+      <div class="price-amount">119 000 ₸<span>/мес</span></div>
+      <div class="price-period">до 100 сотрудников</div>
+      <ul class="price-features">
+        <li>Табель + KPI</li>
+        <li>Служебки + апрув</li>
+        <li>Интеграция с 1С</li>
+        <li>AI Онбординг-бот</li>
+        <li>Авто-выгрузка в enbek.kz</li>
+      </ul>
+      <a href="demo.html" class="price-btn outline" target="_blank">Выбрать</a>
     </div>
-    <div class="tech-item">
-      <h4>📄 Юридическая чистота</h4>
-      <p>Биометрическая подпись документов имеет силу ЭЦП по закону РК. Данные обрабатываются по 27-й статье закона "Об информатизации". Штрафов за утечку нет — мы middleware, а не хранилище оригиналов.</p>
+    <div class="price-card">
+      <div class="price-title">Профи</div>
+      <div class="price-amount">149 000 ₸<span>/мес</span></div>
+      <div class="price-period">свыше 100 сотрудников</div>
+      <ul class="price-features">
+        <li>Всё из Базового</li>
+        <li>Приоритетная поддержка</li>
+        <li>Расширенная аналитика</li>
+        <li>Индивидуальные отчёты</li>
+      </ul>
+      <a href="demo.html" class="price-btn outline" target="_blank">Выбрать</a>
     </div>
-    <div class="tech-item">
-      <h4>🤖 Enbek.kz без рисков</h4>
-      <p>На старте — RPA-робот (работает даже при изменении API), при масштабировании — прямая интеграция с Минтруда. Гарантируем регистрацию договора в ЕСУТД в день подписания.</p>
+  </div>
+
+  <!-- Разовая настройка -->
+  <div class="setup-wrap">
+    <div class="setup-title">🔧 Разовая настройка (под ключ)</div>
+    <div class="setup-grid">
+      <div class="setup-item">
+        <div style="font-weight: 700;">Внедрение ВахтаПро</div>
+        <div class="setup-price">299 000 ₸</div>
+        <div class="setup-desc">Установка, настройка 1С (обмен данными), RPA для enbek.kz, обучение HR и начальников участков, поддержка 1 месяц.</div>
+      </div>
+      <div class="setup-item">
+        <div style="font-weight: 700;">Модуль удалённой подписи</div>
+        <div class="setup-price">499 000 ₸</div>
+        <div class="setup-desc">Лицензия стороннего оператора ЭЦП (био-подпись, Face ID). Включает годовую техподдержку. Работник подписывает договоры с телефона — юридическая сила.</div>
+      </div>
     </div>
-    <div class="tech-item">
-      <h4>🔒 Безопасность и локализация</h4>
-      <p>Хостинг на серверах в РК (физически в Астане). Соответствие требованиям о персональных данных. Резервное копирование каждые 6 часов.</p>
+    <div class="setup-note">
+      💡 Модуль подписи можно подключить сразу или позже. Без него система работает полностью, кроме удалённого подписания договоров.
     </div>
   </div>
 </div>
@@ -484,7 +484,7 @@
 <div class="section" style="padding-top:0;">
   <div class="cta-wrap" style="background: var(--acc); border-radius: 24px; padding: 56px; text-align: center; color: #fff;">
     <h2 style="font-family: 'Unbounded'; margin-bottom: 16px;">Посмотрите демо прямо сейчас</h2>
-    <p style="margin-bottom: 28px; opacity: 0.9;">Без регистрации. Нажимайте кнопки как работник, начальник участка, HR и бухгалтер.</p>
+    <p style="margin-bottom: 28px; opacity: 0.9;">Без регистрации. Нажимайте кнопки как начальник участка, HR и бухгалтер.</p>
     <div style="display: flex; gap: 12px; justify-content: center;">
       <a href="demo.html" class="btn-white" style="background: #fff; color: var(--acc2); padding: 12px 28px; border-radius: 40px; text-decoration: none; font-weight: 700;">Открыть демо</a>
       <a href="mailto:support@lunatargetai.com" class="btn-outline-w" style="border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 12px 28px; border-radius: 40px; text-decoration: none;">Связаться и обсудить пилот</a>
