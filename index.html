@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ВахтаПро — Автоматизация табелей и KPI для вахты</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --dark: #0d1117;
+  --acc: #00b87a;
+  --acc2: #007a52;
+  --txt: #1a2030;
+  --mut: #6b7280;
+  --bord: #e2ddd5;
+  --surf: #ffffff;
+  --warm: #f0ede6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Golos Text', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--bord);
+  position: sticky; top: 0; z-index: 100;
+}
+.logo {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--acc);
+  letter-spacing: -0.5px;
+}
+.logo span { color: var(--txt); }
+.nav-cta {
+  background: var(--acc); color: #fff;
+  font-family: 'Golos Text', sans-serif;
+  font-size: 14px; font-weight: 600;
+  padding: 10px 22px; border-radius: 8px;
+  border: none; cursor: pointer; text-decoration: none;
+  transition: background .2s;
+}
+.nav-cta:hover { background: var(--acc2); }
+
+/* HERO */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 80px 48px 60px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(0,184,122,.1);
+  border: 1px solid rgba(0,184,122,.3);
+  color: var(--acc2);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(28px, 3.5vw, 46px);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--acc);
+  position: relative;
+}
+
+.hero p {
+  font-size: 17px; color: var(--mut);
+  line-height: 1.7; margin-bottom: 32px;
+  max-width: 480px;
+}
+
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-primary {
+  background: var(--acc); color: #fff;
+  font-family: 'Golos Text', sans-serif;
+  font-size: 15px; font-weight: 700;
+  padding: 14px 28px; border-radius: 10px;
+  border: none; cursor: pointer; text-decoration: none;
+  display: inline-block; transition: all .2s;
+}
+.btn-primary:hover { background: var(--acc2); transform: translateY(-1px); }
+
+.btn-secondary {
+  background: transparent; color: var(--txt);
+  font-family: 'Golos Text', sans-serif;
+  font-size: 15px; font-weight: 600;
+  padding: 14px 28px; border-radius: 10px;
+  border: 1.5px solid var(--bord); cursor: pointer;
+  text-decoration: none; display: inline-block; transition: all .2s;
+}
+.btn-secondary:hover { border-color: var(--acc); color: var(--acc); }
+
+/* HERO RIGHT — stats card */
+.hero-card {
+  background: var(--dark);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--acc), #00d4aa);
+}
+
+.hc-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--acc); text-transform: uppercase;
+  letter-spacing: 1px; margin-bottom: 20px;
+}
+
+.hc-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 13px;
+}
+.hc-row:last-child { border-bottom: none; }
+.hc-key { color: rgba(255,255,255,.45); }
+.hc-val { font-weight: 600; color: #fff; }
+.hc-val.ok { color: var(--acc); }
+.hc-val.auto {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(0,184,122,.12);
+  border: 1px solid rgba(0,184,122,.3);
+  border-radius: 5px; padding: 2px 9px;
+  font-size: 11px; font-weight: 700; color: var(--acc);
+}
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--acc); animation: p 1.5s infinite; }
+@keyframes p { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* PAIN SECTION */
+.section { max-width: 1100px; margin: 0 auto; padding: 60px 48px; }
+.sec-label { font-size: 11px; font-weight: 700; color: var(--acc); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.sec-h {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(22px, 2.5vw, 34px);
+  font-weight: 700; letter-spacing: -1px;
+  margin-bottom: 12px; color: var(--dark);
+}
+.sec-sub { font-size: 16px; color: var(--mut); line-height: 1.6; max-width: 600px; margin-bottom: 40px; }
+
+/* 3 pillars */
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pillar {
+  background: var(--surf);
+  border: 1px solid var(--bord);
+  border-radius: 16px; padding: 28px;
+  transition: box-shadow .2s;
+}
+.pillar:hover { box-shadow: 0 8px 32px rgba(0,0,0,.06); }
+.pillar-num {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--acc); margin-bottom: 14px;
+}
+.pillar h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; color: var(--dark); }
+.pillar p { font-size: 13px; color: var(--mut); line-height: 1.65; }
+.pillar-tag {
+  display: inline-block; margin-top: 14px;
+  background: rgba(0,184,122,.08);
+  border: 1px solid rgba(0,184,122,.2);
+  color: var(--acc2); font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 12px;
+}
+
+/* HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+.how-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: 10%; right: 10%; height: 1px;
+  border-top: 1.5px dashed var(--bord);
+  z-index: 0;
+}
+.how-step { text-align: center; padding: 0 8px; position: relative; z-index: 1; }
+.how-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--surf); border: 2px solid var(--acc);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--acc); margin: 0 auto 14px;
+}
+.how-role { font-size: 12px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+.how-desc { font-size: 11px; color: var(--mut); line-height: 1.5; }
+
+/* WHO SECTION */
+.who-wrap {
+  background: var(--dark);
+  border-radius: 24px;
+  padding: 56px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 56px; align-items: center;
+}
+.who-left h2 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 700; letter-spacing: -0.5px;
+  color: #fff; margin-bottom: 16px;
+}
+.who-left p { font-size: 15px; color: rgba(255,255,255,.55); line-height: 1.7; margin-bottom: 24px; }
+
+.cred-list { list-style: none; }
+.cred-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+  font-size: 13px; color: rgba(255,255,255,.75);
+  line-height: 1.5;
+}
+.cred-item:last-child { border-bottom: none; }
+.cred-ico {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,184,122,.15); border: 1px solid rgba(0,184,122,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; flex-shrink: 0; margin-top: 1px;
+}
+
+.who-right {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 28px;
+}
+.quote {
+  font-size: 16px; font-style: italic;
+  color: rgba(255,255,255,.8); line-height: 1.7;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--acc);
+  padding-left: 18px;
+}
+.who-name { font-size: 14px; font-weight: 600; color: #fff; }
+.who-title { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 3px; }
+
+/* ENBEK BLOCK */
+.enbek-block {
+  background: var(--surf);
+  border: 1px solid var(--bord);
+  border-radius: 20px; padding: 40px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center;
+}
+.enbek-left h3 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 12px; color: var(--dark);
+}
+.enbek-left p { font-size: 14px; color: var(--mut); line-height: 1.7; margin-bottom: 20px; }
+
+.enbek-badge-big {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,184,122,.08);
+  border: 1px solid rgba(0,184,122,.25);
+  border-radius: 10px; padding: 10px 18px;
+  font-size: 13px; font-weight: 700; color: var(--acc2);
+}
+
+.compare-mini { list-style: none; }
+.cm-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 0; border-bottom: 1px solid var(--bord);
+  font-size: 13px;
+}
+.cm-item:last-child { border-bottom: none; }
+.cm-bad { color: #c0392b; font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+.cm-ok { color: var(--acc); font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+/* CTA SECTION */
+.cta-wrap {
+  background: var(--acc);
+  border-radius: 24px; padding: 56px;
+  text-align: center;
+}
+.cta-wrap h2 {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(22px, 3vw, 36px);
+  font-weight: 700; letter-spacing: -1px;
+  color: #fff; margin-bottom: 14px;
+}
+.cta-wrap p { font-size: 16px; color: rgba(255,255,255,.75); margin-bottom: 32px; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-white {
+  background: #fff; color: var(--acc2);
+  font-family: 'Golos Text', sans-serif;
+  font-size: 15px; font-weight: 700;
+  padding: 14px 28px; border-radius: 10px;
+  border: none; cursor: pointer; text-decoration: none;
+  display: inline-block; transition: all .2s;
+}
+.btn-white:hover { background: #f0fdf9; }
+.btn-outline-w {
+  background: transparent; color: #fff;
+  font-family: 'Golos Text', sans-serif;
+  font-size: 15px; font-weight: 600;
+  padding: 14px 28px; border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,.4);
+  cursor: pointer; text-decoration: none;
+  display: inline-block; transition: all .2s;
+}
+.btn-outline-w:hover { border-color: #fff; }
+
+/* FOOTER */
+footer {
+  text-align: center; padding: 32px 48px;
+  font-size: 13px; color: var(--mut);
+  border-top: 1px solid var(--bord);
+}
+footer a { color: var(--acc); text-decoration: none; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.hero-left { animation: fadeUp .5s ease both; }
+.hero-card { animation: fadeUp .5s .15s ease both; }
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  nav { padding: 16px 20px; }
+  .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 32px; }
+  .hero-card { display: none; }
+  .section { padding: 40px 20px; }
+  .pillars { grid-template-columns: 1fr; }
+  .how-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .how-grid::before { display: none; }
+  .who-wrap { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; }
+  .enbek-block { grid-template-columns: 1fr; gap: 24px; padding: 28px 20px; }
+  .cta-wrap { padding: 36px 20px; border-radius: 16px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Вахта<span>Про</span></div>
+  <a href="demo.html" class="nav-cta" target="_blank">Открыть демо</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Для компаний с вахтой · Казахстан</div>
+    <h1>Табели. KPI.<br>Кадры. <em>Автоматически.</em></h1>
+    <p>Работник подтверждает свои выходы с телефона — начальник участка проверяет, а не вносит за каждого вручную. Договоры подписываются биометрией. Enbek.kz обновляется сам. Данные в 1С верные — бухгалтер начисляет без нервов.</p>
+    <div class="hero-btns">
+      <a href="demo.html" class="btn-primary" target="_blank">Попробовать демо</a>
+      <a href="mailto:support@lunatargetai.com" class="btn-secondary">Связаться</a>
+    </div>
+  </div>
+
+  <div class="hero-card">
+    <div class="hc-label">Статус системы · май 2025</div>
+    <div class="hc-row"><span class="hc-key">Табелей обработано</span><span class="hc-val ok">87 / 87</span></div>
+    <div class="hc-row"><span class="hc-key">KPI подписано бригадами</span><span class="hc-val ok">84 работника</span></div>
+    <div class="hc-row"><span class="hc-key">Конфликтов с документами</span><span class="hc-val">3 → HR 20 мин</span></div>
+    <div class="hc-row"><span class="hc-key">Enbek.kz</span><span class="hc-val auto"><span class="pulse"></span>Обновлён автоматически</span></div>
+    <div class="hc-row"><span class="hc-key">Данные в 1С</span><span class="hc-val ok">Верные · бухгалтер спокоен</span></div>
+    <div class="hc-row"><span class="hc-key">Время HR на сверку</span><span class="hc-val ok">20 мин (было 3 дня)</span></div>
+  </div>
+</div>
+
+<!-- 3 PILLARS -->
+<div class="section">
+  <div class="sec-label">Что автоматизируем</div>
+  <div class="sec-h">Три главные боли — одна система</div>
+  <div class="sec-sub">Работает поверх вашей 1С. HR продолжает работать как обычно — просто перестаёт делать лишнее.</div>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <h3>Табели и KPI</h3>
+      <p>Работник подтверждает свои выходы с телефона — сколько смен, были ли ночные, больничный. Начальник участка видит это и проверяет, а не вносит за каждого вручную. Ошибок меньше: сам работник лучше помнит свои дни. Данные в 1С верные — бухгалтер начисляет без нервов.</p>
+      <span class="pillar-tag">−70% времени HR</span>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <h3>Приём, перевод, отпуск</h3>
+      <p>Служебка с телефона — апрув директора — данные кандидата по ИИН из госбаз — договор подписывается биометрией. Никаких бумаг, никаких поездок в офис.</p>
+      <span class="pillar-tag">5 мин на оформление</span>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <h3>Enbek.kz — сам</h3>
+      <p>После каждого кадрового события договор автоматически уходит в ЕСУТД. HR больше не заходит в enbek.kz вручную. Требование закона выполняется само.</p>
+      <span class="pillar-tag">0 ручного ввода</span>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section" style="padding-top:0;">
+  <div class="sec-label">Как работает</div>
+  <div class="sec-h" style="margin-bottom:40px;">Пять шагов — никто ничего не вводит дважды</div>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <div class="how-role">Работник</div>
+      <div class="how-desc">Отправляет табель с телефона. Видит прогноз зарплаты.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <div class="how-role">Нач. участка</div>
+      <div class="how-desc">Проверяет бригаду. Управляет KPI — фиксирует только инциденты.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <div class="how-role">HR</div>
+      <div class="how-desc">Видит только конфликты. Нажимает «Одобрить».</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">4</div>
+      <div class="how-role">Бухгалтер</div>
+      <div class="how-desc">Открывает 1С — данные уже верные. Начисляет без нервов.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">5</div>
+      <div class="how-role">Enbek.kz</div>
+      <div class="how-desc">Обновляется автоматически. HR не участвует.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ENBEK BLOCK -->
+<div class="section" style="padding-top:0;">
+  <div class="enbek-block">
+    <div class="enbek-left">
+      <h3>Enbek.kz — перестаньте вносить вручную</h3>
+      <p>На hh.kz сотни вакансий HR с требованием «работа с enbek.kz». Значит у большинства компаний есть человек, который вручную вносит каждый договор. С нами — этой работы нет.</p>
+      <div class="enbek-badge-big">
+        <span class="pulse" style="background:var(--acc);"></span>
+        Авто-выгрузка при каждом кадровом событии
+      </div>
+    </div>
+    <div class="enbek-right">
+      <ul class="compare-mini">
+        <li class="cm-item"><span class="cm-bad">✕</span><span>HR отдельно заходит в enbek.kz и вносит каждый договор руками</span></li>
+        <li class="cm-item"><span class="cm-ok">✓</span><span>После подписания договор автоматически уходит в ЕСУТД</span></li>
+        <li class="cm-item"><span class="cm-bad">✕</span><span>Забыли внести — предписание от инспекции труда</span></li>
+        <li class="cm-item"><span class="cm-ok">✓</span><span>Невозможно забыть — система делает сама при каждом событии</span></li>
+        <li class="cm-item"><span class="cm-bad">✕</span><span>Увольнение, перевод — снова ручной ввод</span></li>
+        <li class="cm-item"><span class="cm-ok">✓</span><span>Любое кадровое событие автоматически отражается</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- WHO AM I -->
+<div class="section" style="padding-top:0;">
+  <div class="who-wrap">
+    <div class="who-left">
+      <h2>Почему мне можно доверять</h2>
+      <p>Я не технарь, который пытается понять HR. Я HR, который научился автоматизировать.</p>
+      <ul class="cred-list">
+        <li class="cred-item">
+          <span class="cred-ico">✓</span>
+          <span>В HR с 2004 года — сама вручную вносила табели, сверяла документы, заходила в enbek.kz</span>
+        </li>
+        <li class="cred-item">
+          <span class="cred-ico">✓</span>
+          <span>Внедрила HRMS для компании с численностью более 2 000 человек — будучи HR-специалистом, не внешним консультантом</span>
+        </li>
+        <li class="cred-item">
+          <span class="cred-ico">✓</span>
+          <span>Автоматизировала кадровый документооборот в компаниях до 300 человек — знаю как это работает в реальности, не в презентации</span>
+        </li>
+        <li class="cred-item">
+          <span class="cred-ico">✓</span>
+          <span>Понимаю боль изнутри — поэтому автоматизирую то что реально болит, а не то что красиво выглядит</span>
+        </li>
+      </ul>
+    </div>
+    <div class="who-right">
+      <div class="quote">
+        "Когда я внедряла HRMS на 2 000 человек, я была по другую сторону — пользователем. Я знаю где система мешает, а не помогает. ВахтаПро я строила с одним вопросом: что бы я хотела иметь тогда?"
+      </div>
+      <div class="who-name">Камшат Алмагамбетова</div>
+      <div class="who-title">Основатель ВахтаПро · HR-эксперт с 2004 года · г. Астана</div>
+      <div style="margin-top:16px;">
+        <a href="https://www.lunatargetai.com/" target="_blank" style="font-size:12px;color:var(--acc);text-decoration:none;font-weight:600;">С.А.К — Цифровой офис →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="section" style="padding-top:0;">
+  <div class="cta-wrap">
+    <h2>Посмотрите демо прямо сейчас</h2>
+    <p>Без регистрации. Нажимайте кнопки и смотрите систему глазами работника, начальника участка, HR и бухгалтера.</p>
+    <div class="cta-btns">
+      <a href="demo.html" class="btn-white" target="_blank">Открыть демо</a>
+      <a href="mailto:support@lunatargetai.com" class="btn-outline-w">Связаться и обсудить пилот</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>ИП Алмагамбетова К.Ж. · ИИН 800530400759 · г. Астана · <a href="https://www.lunatargetai.com/" target="_blank">lunatargetai.com</a> · <a href="mailto:support@lunatargetai.com">support@lunatargetai.com</a> · +7 (705) 345-84-58</p>
+</footer>
+
+</body>
+</html>
