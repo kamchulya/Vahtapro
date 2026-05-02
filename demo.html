@@ -2,492 +2,71 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ВахтаПро — демо</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>ВахтаПро — демо табелей, KPI и приёма</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080c18;--surf:#0f1624;--surf2:#162030;--bord:#1c2d45;--acc:#00c897;--acc2:#0057ff;--warn:#ff8c42;--txt:#e2e8f4;--mut:#5a6a88;--ok:#00b87a;--bad:#ff3d57;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Golos Text',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;}
-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid var(--bord);position:sticky;top:0;background:rgba(8,12,24,0.96);backdrop-filter:blur(16px);z-index:100;}
-.logo{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--acc);}
-.logo span{color:var(--txt);}
-.tabs{display:flex;gap:2px;background:var(--surf);padding:4px;border-radius:10px;border:1px solid var(--bord);}
-.tab{padding:7px 13px;border-radius:7px;border:none;background:transparent;color:var(--mut);font-family:'Golos Text',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.tab.active{background:var(--acc);color:#000;font-weight:700;}
-.tab:hover:not(.active){color:var(--txt);background:var(--surf2);}
-.badge{font-size:10px;background:var(--bad);color:#fff;border-radius:10px;padding:1px 5px;margin-left:3px;}
-.screen{display:none;padding:32px;max-width:1020px;margin:0 auto;}
-.screen.on{display:block;animation:up .25s ease;}
-@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
-/* hero */
-.hero{text-align:center;padding:48px 16px;}
-.tag{display:inline-block;background:rgba(0,200,151,.1);border:1px solid rgba(0,200,151,.3);color:var(--acc);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:18px;}
-.hero h1{font-family:'Unbounded',sans-serif;font-size:clamp(22px,3.5vw,40px);font-weight:700;line-height:1.2;margin-bottom:16px;letter-spacing:-1px;}
-.hero h1 em{font-style:normal;color:var(--acc);}
-.hero p{font-size:15px;color:var(--mut);max-width:500px;margin:0 auto 28px;line-height:1.7;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0;}
-.stat{background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:18px;text-align:center;}
-.stat-n{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:700;color:var(--acc);display:block;margin-bottom:4px;}
-.stat-l{font-size:11px;color:var(--mut);}
-.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:28px 0;}
-.fs{background:var(--surf);border:1px solid var(--bord);border-radius:10px;padding:12px 14px;text-align:center;min-width:110px;cursor:pointer;transition:all .2s;}
-.fs:hover{border-color:var(--acc);transform:translateY(-2px);}
-.fs .ico{font-size:18px;margin-bottom:4px;display:block;}
-.fs .lb{font-size:11px;font-weight:600;}
-.fs .sb{font-size:10px;color:var(--mut);margin-top:2px;}
-.farr{color:var(--mut);font-size:16px;padding:0 5px;}
-.btn-p{background:var(--acc);color:#000;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;padding:11px 24px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;margin:0 5px;}
-.btn-p:hover{background:#00eaaf;}
-.btn-o{background:transparent;color:var(--txt);font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;padding:11px 24px;border-radius:8px;border:1px solid var(--bord);cursor:pointer;transition:all .2s;margin:0 5px;}
-.btn-o:hover{border-color:var(--acc);color:var(--acc);}
-
-/* section header */
-.sh{font-family:'Unbounded',sans-serif;font-size:18px;margin-bottom:5px;}
-.sd{color:var(--mut);font-size:12px;margin-bottom:20px;}
-
-/* phone */
-.phone{max-width:380px;margin:0 auto;background:var(--surf);border:1px solid var(--bord);border-radius:20px;padding:22px 20px;}
-.ph-head{display:flex;align-items:center;gap:9px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--bord);}
-.av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#000;flex-shrink:0;}
-.nm{font-weight:600;font-size:13px;}.rl{font-size:10px;color:var(--mut);}
-.fl{margin-bottom:12px;}
-.fl-lb{font-size:10px;color:var(--mut);font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}
-.fl-in{width:100%;background:var(--surf2);border:1px solid var(--bord);border-radius:6px;padding:8px 11px;color:var(--txt);font-family:'Golos Text',sans-serif;font-size:13px;transition:border-color .2s;}
-.fl-in:focus{outline:none;border-color:var(--acc);}
-.sal{background:rgba(0,200,151,.07);border:1px solid rgba(0,200,151,.22);border-radius:10px;padding:12px;margin:14px 0;text-align:center;}
-.sal-l{font-size:10px;color:var(--acc);font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
-.sal-a{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;margin:4px 0 2px;}
-.sal-n{font-size:9px;color:var(--mut);}
-.warn-box{background:rgba(255,61,87,.07);border:1px solid rgba(255,61,87,.25);border-radius:6px;padding:9px 11px;font-size:11px;color:#ff7a8a;margin-bottom:12px;display:none;}
-.warn-box.on{display:block;}
-.kpi-box{background:rgba(0,200,151,.06);border:1px solid rgba(0,200,151,.2);border-radius:10px;padding:12px;margin-top:14px;}
-.kpi-t{font-size:10px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
-.kpi-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--bord);font-size:12px;}
-.kpi-row:last-child{border-bottom:none;}
-.kv{font-weight:700;color:var(--ok);}
-.send{width:100%;background:var(--acc);color:#000;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;padding:11px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;margin-top:8px;}
-.send:hover{background:#00eaaf;}
-.send:disabled{background:var(--bord);color:var(--mut);cursor:not-allowed;}
-
-/* cards grid */
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.kc{background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:16px;}
-.kn{font-family:'Unbounded',sans-serif;font-size:24px;font-weight:700;display:block;margin-bottom:3px;}
-.kl{font-size:11px;color:var(--mut);}
-.n-a{color:var(--acc);}.n-o{color:var(--ok);}.n-b{color:var(--bad);}
-
-/* table */
-.tbl{background:var(--surf);border:1px solid var(--bord);border-radius:12px;overflow:hidden;margin-bottom:16px;}
-.tbl-h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--bord);}
-.tbl-t{font-weight:600;font-size:13px;}
-table{width:100%;border-collapse:collapse;}
-th{text-align:left;padding:8px 16px;font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;background:rgba(255,255,255,.02);}
-td{padding:11px 16px;font-size:12px;border-top:1px solid var(--bord);}
-tr:hover td{background:rgba(255,255,255,.015);}
-.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;}
-.d-ok{background:var(--ok);}.d-w{background:var(--warn);}.d-p{background:var(--mut);}
-.ab{font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;border:none;cursor:pointer;transition:all .15s;}
-.ab-ok{background:rgba(0,184,122,.14);color:var(--ok);}.ab-ok:hover{background:rgba(0,184,122,.28);}
-.ab-fix{background:rgba(255,140,66,.14);color:var(--warn);}.ab-fix:hover{background:rgba(255,140,66,.28);}
-.kpi-mech{background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:16px;}
-.km-t{font-size:12px;font-weight:600;margin-bottom:12px;color:var(--acc);}
-.km-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bord);font-size:12px;}
-.km-row:last-child{border-bottom:none;}
-.kcoef{font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;}
-.cf{color:var(--ok);}.cl{color:var(--warn);}.cz{color:var(--bad);}.cb{color:var(--acc);}
-.inc{font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;border:1px solid var(--bord);background:transparent;color:var(--mut);cursor:pointer;transition:all .2s;}
-.inc:hover{border-color:var(--warn);color:var(--warn);}
-
-/* conflict list */
-.cl-list{list-style:none;}
-.ci{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid var(--bord);}
-.ci:last-child{border-bottom:none;}
-.ci-ico{width:28px;height:28px;border-radius:6px;background:rgba(255,61,87,.1);border:1px solid rgba(255,61,87,.22);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.ci-txt{font-size:11px;line-height:1.5;}
-.ci-who{font-weight:600;}.ci-det{color:var(--mut);margin-top:1px;}
-.rb{margin-left:auto;font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;border:1px solid var(--bord);background:transparent;color:var(--txt);cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0;}
-.rb:hover{border-color:var(--acc);color:var(--acc);}
-.rb.done{border-color:var(--ok);color:var(--ok);background:rgba(0,184,122,.07);}
-
-/* export */
-.exp-card{background:var(--surf);border:1px solid var(--bord);border-radius:12px;padding:22px;max-width:560px;}
-.exp-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bord);font-size:12px;}
-.exp-row:last-child{border-bottom:none;}
-.ek{color:var(--mut);}.ev{font-weight:600;}.ev.ok{color:var(--ok);}.ev.warn{color:var(--warn);}
-.enbek-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bord);font-size:12px;}
-.enbek-badge{display:flex;align-items:center;gap:6px;background:rgba(0,184,122,.1);border:1px solid rgba(0,184,122,.3);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--ok);}
-.enbek-badge .dot-pulse{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.exp-btns{margin-top:18px;display:flex;gap:8px;}
-.exp-main{flex:1;background:var(--acc);color:#000;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:700;padding:11px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;}
-.exp-main:hover{background:#00eaaf;}
-.exp-sec{padding:11px 16px;border-radius:8px;border:1px solid var(--bord);background:transparent;color:var(--txt);font-family:'Golos Text',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
-.exp-sec:hover{border-color:var(--acc);color:var(--acc);}
-.ok-banner{background:rgba(0,184,122,.09);border:1px solid rgba(0,184,122,.28);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--ok);font-weight:600;margin-top:12px;display:none;align-items:center;gap:6px;}
-.ok-banner.on{display:flex;}
-
-/* badges */
-.bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:14px;}
-.bdg-w{background:rgba(255,140,66,.13);color:var(--warn);border:1px solid rgba(255,140,66,.28);}
-.bdg-ok{background:rgba(0,184,122,.11);color:var(--ok);border:1px solid rgba(0,184,122,.28);}
-.bdg-i{background:rgba(0,87,255,.11);color:#5599ff;border:1px solid rgba(0,87,255,.28);}
-
-/* HIRING SCREEN */
-.hire-flow{display:flex;flex-direction:column;gap:0;max-width:660px;}
-.hstep{display:flex;gap:0;align-items:stretch;}
-.hstep-line{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;}
-.hstep-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000;background:var(--acc);flex-shrink:0;margin-top:4px;}
-.hstep-connector{width:2px;background:var(--bord);flex:1;margin:4px 0;}
-.hstep-body{flex:1;padding:0 0 20px 14px;}
-.hstep-title{font-size:13px;font-weight:600;margin-bottom:4px;}
-.hstep-desc{font-size:11px;color:var(--mut);line-height:1.6;margin-bottom:8px;}
-.hstep-card{background:var(--surf);border:1px solid var(--bord);border-radius:10px;padding:12px 14px;}
-.hstep-card.active{border-color:var(--acc);}
-.hstep-card.done{border-color:var(--ok);background:rgba(0,184,122,.05);}
-.iin-row{display:flex;gap:8px;align-items:center;}
-.iin-in{flex:1;background:var(--surf2);border:1px solid var(--bord);border-radius:6px;padding:8px 11px;color:var(--txt);font-family:'Golos Text',sans-serif;font-size:13px;}
-.iin-in:focus{outline:none;border-color:var(--acc);}
-.iin-btn{background:var(--acc);color:#000;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:700;padding:8px 14px;border-radius:6px;border:none;cursor:pointer;white-space:nowrap;transition:all .2s;}
-.iin-btn:hover{background:#00eaaf;}
-.data-pulled{display:none;margin-top:10px;}
-.data-pulled.on{display:block;}
-.data-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--bord);font-size:11px;}
-.data-row:last-child{border-bottom:none;}
-.data-k{color:var(--mut);}.data-v{font-weight:600;}
-.auto-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(0,200,151,.1);border:1px solid rgba(0,200,151,.25);border-radius:4px;padding:1px 6px;font-size:9px;font-weight:700;color:var(--acc);margin-left:6px;}
-.step-btn{background:var(--acc);color:#000;font-family:'Golos Text',sans-serif;font-size:11px;font-weight:700;padding:7px 14px;border-radius:6px;border:none;cursor:pointer;margin-top:8px;transition:all .2s;}
-.step-btn:hover{background:#00eaaf;}
-.step-btn:disabled{background:var(--bord);color:var(--mut);cursor:not-allowed;}
-.status-line{display:flex;align-items:center;gap:8px;font-size:11px;padding:6px 0;}
-.status-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
-.s-ok{background:rgba(0,184,122,.2);color:var(--ok);}
-.s-pend{background:rgba(90,106,136,.2);color:var(--mut);}
-.enbek-auto{background:rgba(0,200,151,.08);border:1px solid rgba(0,200,151,.25);border-radius:8px;padding:10px 12px;margin-top:8px;font-size:11px;display:none;}
-.enbek-auto.on{display:flex;align-items:center;gap:8px;}
-.enbek-logo{font-size:10px;font-weight:700;color:var(--acc);background:rgba(0,200,151,.15);padding:2px 7px;border-radius:4px;white-space:nowrap;}
-
-@media(max-width:700px){nav{padding:12px 12px;}.tab{padding:6px 8px;font-size:11px;}.screen{padding:16px 12px;}.stats,.g3{grid-template-columns:1fr 1fr;}.g2{grid-template-columns:1fr;}.farr{display:none;}}
-</style>
-</head>
-<body>
-<nav>
-  <div class="logo">Вахта<span>Про</span></div>
-  <div class="tabs">
-    <button class="tab active" onclick="show('home')">Обзор</button>
-    <button class="tab" onclick="show('hire')">Приём</button>
-    <button class="tab" onclick="show('worker')">Работник</button>
-    <button class="tab" onclick="show('foreman')">Нач. участка</button>
-    <button class="tab" onclick="show('hr')">HR <span class="badge">3</span></button>
-    <button class="tab" onclick="show('export')">Бухгалтер</button>
-  </div>
-</nav>
-
-<!-- HOME -->
-<div class="screen on" id="s-home">
-  <div class="hero">
-    <div class="tag">Для компаний с вахтовым методом · Казахстан</div>
-    <h1>Табели. KPI. Документы.<br><em>Всё автоматически.</em></h1>
-    <p>Работник отправляет табель с телефона. Enbek.kz заполняется сам. Бухгалтер получает готовый файл для 1С.</p>
-    <div><button class="btn-p" onclick="show('hire')">Приём работника</button><button class="btn-o" onclick="show('worker')">Табели и KPI</button></div>
-  </div>
-  <div class="stats">
-    <div class="stat"><span class="stat-n">−70%</span><div class="stat-l">Времени HR на табели и документы</div></div>
-    <div class="stat"><span class="stat-n">Авто</span><div class="stat-l">Выгрузка в enbek.kz при каждом событии</div></div>
-    <div class="stat"><span class="stat-n">0</span><div class="stat-l">Споров по зарплате — KPI подписан заранее</div></div>
-  </div>
-  <div style="margin-bottom:8px;font-size:12px;color:var(--mut);">Нажмите на шаг чтобы посмотреть интерфейс</div>
-  <div class="flow">
-    <div class="fs" onclick="show('hire')"><span class="ico">📄</span><div class="lb">Приём</div><div class="sb">Без бумаг</div></div>
-    <div class="farr">→</div>
-    <div class="fs" onclick="show('worker')"><span class="ico">👷</span><div class="lb">Работник</div><div class="sb">Отправляет табель</div></div>
-    <div class="farr">→</div>
-    <div class="fs" onclick="show('foreman')"><span class="ico">📋</span><div class="lb">Нач. участка</div><div class="sb">Проверяет + KPI</div></div>
-    <div class="farr">→</div>
-    <div class="fs" onclick="show('hr')"><span class="ico">👩‍💼</span><div class="lb">HR</div><div class="sb">Только конфликты</div></div>
-    <div class="farr">→</div>
-    <div class="fs" onclick="show('export')"><span class="ico">📊</span><div class="lb">Бухгалтер</div><div class="sb">Готовый файл</div></div>
-  </div>
-</div>
-
-<!-- HIRING -->
-<div class="screen" id="s-hire">
-  <div class="sh">Приём нового работника</div>
-  <div class="sd">От служебки до подписанного договора в enbek.kz — без ручного ввода. Нажимайте кнопки чтобы пройти весь путь.</div>
-
-  <div class="hire-flow">
-
-    <!-- Шаг 1 -->
-    <div class="hstep">
-      <div class="hstep-line"><div class="hstep-num">1</div><div class="hstep-connector"></div></div>
-      <div class="hstep-body">
-        <div class="hstep-title">Начальник участка подаёт служебку</div>
-        <div class="hstep-desc">С телефона. Директор апрувит там же — без бумаг и поездок в офис.</div>
-        <div class="hstep-card done">
-          <div class="status-line"><span class="status-icon s-ok">✓</span><span>Служебка на приём: <b>Ахметов Д.Н.</b> · Бригада №3 · Слесарь 4 разряда · Выход 01.06</span></div>
-          <div class="status-line"><span class="status-icon s-ok">✓</span><span>Директор Сейткали А. апрувил · 28.05 в 14:22</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Шаг 2 -->
-    <div class="hstep">
-      <div class="hstep-line"><div class="hstep-num">2</div><div class="hstep-connector"></div></div>
-      <div class="hstep-body">
-        <div class="hstep-title">Кандидат вводит ИИН — данные подтягиваются автоматически</div>
-        <div class="hstep-desc">Кандидат получает ссылку. Вводит ИИН — система запрашивает данные из государственных баз РК.</div>
-        <div class="hstep-card active" id="iin-card">
-          <div class="iin-row">
-            <input class="iin-in" id="iin-input" type="text" placeholder="Введите ИИН кандидата" maxlength="12">
-            <button class="iin-btn" onclick="pullIIN()">Подтянуть данные</button>
-          </div>
-          <div class="data-pulled" id="data-pulled">
-            <div style="font-size:10px;color:var(--acc);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;margin-top:10px;">Данные из госбаз РК <span class="auto-tag">авто</span></div>
-            <div class="data-row"><span class="data-k">ФИО</span><span class="data-v">Ахметов Данияр Нурланович</span></div>
-            <div class="data-row"><span class="data-k">Дата рождения</span><span class="data-v">15.03.1991</span></div>
-            <div class="data-row"><span class="data-k">Уд. личности</span><span class="data-v">№ 052847163 · до 2029</span></div>
-            <div class="data-row"><span class="data-k">Адрес</span><span class="data-v">Алматы, мкр Айнабулак</span></div>
-            <button class="step-btn" onclick="nextStep(3)" id="btn-step3">Сформировать договор</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Шаг 3 -->
-    <div class="hstep">
-      <div class="hstep-line"><div class="hstep-num" id="num3" style="background:var(--bord);color:var(--mut);">3</div><div class="hstep-connector"></div></div>
-      <div class="hstep-body">
-        <div class="hstep-title">HR проверяет и отправляет договор на подпись</div>
-        <div class="hstep-desc">Данные уже заполнены. HR не печатает, не переписывает — только проверяет и нажимает отправить.</div>
-        <div class="hstep-card" id="card3">
-          <div class="status-line"><span class="status-icon s-pend" id="ic3a">○</span><span id="tx3a" style="color:var(--mut);">Трудовой договор сформирован — ждёт отправки</span></div>
-          <button class="step-btn" onclick="nextStep(4)" id="btn-step4" disabled>Отправить работнику на подпись</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Шаг 4 -->
-    <div class="hstep">
-      <div class="hstep-line"><div class="hstep-num" id="num4" style="background:var(--bord);color:var(--mut);">4</div><div class="hstep-connector"></div></div>
-      <div class="hstep-body">
-        <div class="hstep-title">Работник подписывает биометрией телефона</div>
-        <div class="hstep-desc">Уведомление в eGov Mobile. Нажал «Подписать» — Face ID. Юридически значимо по Закону РК об ЭЦП.</div>
-        <div class="hstep-card" id="card4">
-          <div class="status-line"><span class="status-icon s-pend" id="ic4a">○</span><span id="tx4a" style="color:var(--mut);">Ожидаем подпись работника</span></div>
-          <button class="step-btn" onclick="nextStep(5)" id="btn-step5" disabled>Работник подписал (симуляция)</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Шаг 5 -->
-    <div class="hstep">
-      <div class="hstep-line"><div class="hstep-num" id="num5" style="background:var(--bord);color:var(--mut);">5</div></div>
-      <div class="hstep-body">
-        <div class="hstep-title">Автоматически уходит в enbek.kz</div>
-        <div class="hstep-desc">HR ничего не делает. Договор сам регистрируется в ЕСУТД. Требование закона выполнено.</div>
-        <div class="hstep-card" id="card5">
-          <div class="status-line"><span class="status-icon s-pend" id="ic5a">○</span><span id="tx5a" style="color:var(--mut);">Ожидает подписания</span></div>
-          <div class="enbek-auto" id="enbek-auto">
-            <span class="enbek-logo">enbek.kz</span>
-            <span style="color:var(--ok);font-weight:600;">Договор зарегистрирован автоматически · 28.05 · 15:04</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- WORKER -->
-<div class="screen" id="s-worker">
-  <div class="sh">Интерфейс работника</div>
-  <div class="sd">Отправляет табель за 3 минуты. Сразу видит прогноз зарплаты и KPI за вахту.</div>
-  <div class="phone">
-    <div class="ph-head">
-      <div class="av">АС</div>
-      <div><div class="nm">Асылбек Сейткали</div><div class="rl">Бригада №3 · Вахта май 2025</div></div>
-    </div>
-    <div class="fl"><div class="fl-lb">Полевые смены (дней)</div><input class="fl-in" type="number" id="w-f" value="12" min="0" max="31" oninput="calc()"></div>
-    <div class="fl"><div class="fl-lb">Ночные часы</div><input class="fl-in" type="number" id="w-n" value="40" min="0" max="200" oninput="calc()"></div>
-    <div class="fl"><div class="fl-lb">Праздничные дни</div><input class="fl-in" type="number" id="w-h" value="2" min="0" max="10" oninput="calc()"></div>
-    <div class="fl"><div class="fl-lb">Больничный (дней)</div><input class="fl-in" type="number" id="w-s" value="0" min="0" max="31" oninput="calc()"></div>
-    <div id="warn-msg" class="warn-box">⚠ Конфликт: отпуск с 10 по 20 мая — проверьте количество смен.</div>
-    <div class="sal">
-      <div class="sal-l">Прогноз зарплаты</div>
-      <div class="sal-a" id="sal-a">485 600 ₸</div>
-      <div class="sal-n">До удержаний ОПВ и ИПН</div>
-    </div>
-    <div class="kpi-box">
-      <div class="kpi-t">Ваш KPI за вахту</div>
-      <div class="kpi-row"><span>Коэффициент</span><span class="kv" id="kpi-c">1.0 — полная премия</span></div>
-      <div class="kpi-row"><span>Инцидентов</span><span class="kv">0</span></div>
-      <div class="kpi-row"><span>Премия</span><span class="kv" id="kpi-b">48 560 ₸</span></div>
-    </div>
-    <button class="send" id="send-btn" onclick="sendT()">Отправить начальнику участка</button>
-  </div>
-</div>
-
-<!-- FOREMAN -->
-<div class="screen" id="s-foreman">
-  <div class="sh">Дашборд начальника участка</div>
-  <div class="sd">Видит всю бригаду. Конфликты подсвечены автоматически. KPI — по умолчанию у всех 1.0.</div>
-  <div class="g3">
-    <div class="kc"><span class="kn n-a">12</span><div class="kl">Всего в бригаде</div></div>
-    <div class="kc"><span class="kn n-o" id="cnt-s">9</span><div class="kl">Сдали табель</div></div>
-    <div class="kc"><span class="kn n-b">2</span><div class="kl">Конфликты</div></div>
-  </div>
-  <div class="tbl">
-    <div class="tbl-h"><span class="tbl-t">Бригада №3 — май 2025</span><span class="bdg bdg-w">2 конфликта</span></div>
-    <table>
-      <thead><tr><th>Сотрудник</th><th>Смены</th><th>Ночные</th><th>KPI</th><th>Прогноз ₸</th><th>Статус</th><th></th></tr></thead>
-      <tbody>
-        <tr><td>Асылбек Сейткали</td><td>12</td><td>40ч</td><td><span style="color:var(--ok);font-weight:700;">1.0</span></td><td>485 600</td><td><span class="dot d-ok"></span>Сдан</td><td><button class="ab ab-ok" onclick="apr(this)">Подтвердить</button></td></tr>
-        <tr><td>Дмитрий Петров</td><td style="color:var(--bad)">15 ⚠</td><td>48ч</td><td><span style="color:var(--warn);font-weight:700;">0.7</span></td><td>—</td><td><span class="dot d-w"></span>Конфликт</td><td><button class="ab ab-fix" onclick="fix(this)">Исправить</button></td></tr>
-        <tr><td>Ернар Жаксыбеков</td><td>10</td><td>32ч</td><td><span style="color:var(--ok);font-weight:700;">1.0</span></td><td>398 200</td><td><span class="dot d-ok"></span>Сдан</td><td><button class="ab ab-ok" onclick="apr(this)">Подтвердить</button></td></tr>
-        <tr><td>Сергей Иванов</td><td style="color:var(--bad)">8 ⚠</td><td>24ч</td><td><span style="color:var(--bad);font-weight:700;">0.5</span></td><td>—</td><td><span class="dot d-w"></span>Конфликт</td><td><button class="ab ab-fix" onclick="fix(this)">Исправить</button></td></tr>
-        <tr><td>Болат Нурмагамбет</td><td>11</td><td>36ч</td><td><span style="color:var(--acc);font-weight:700;">1.1 ✦</span></td><td>441 000</td><td><span class="dot d-p"></span>Ожидает</td><td><button class="ab ab-ok" disabled style="opacity:.35">Подтвердить</button></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="kpi-mech">
-    <div class="km-t">⚡ KPI бригады — по умолчанию у всех 1.0, начальник фиксирует только инциденты</div>
-    <div class="km-row"><span>Асылбек Сейткали</span><span class="kcoef cf">1.0</span><button class="inc" onclick="addInc(this)">+ Инцидент</button></div>
-    <div class="km-row"><span>Дмитрий Петров</span><span class="kcoef cl">0.7</span><button class="inc" style="border-color:var(--warn);color:var(--warn);cursor:default;">ТБ нарушение</button></div>
-    <div class="km-row"><span>Ернар Жаксыбеков</span><span class="kcoef cf">1.0</span><button class="inc" onclick="addInc(this)">+ Инцидент</button></div>
-    <div class="km-row"><span>Сергей Иванов</span><span class="kcoef cz">0.5</span><button class="inc" style="border-color:var(--bad);color:var(--bad);cursor:default;">Срыв сроков</button></div>
-    <div class="km-row"><span>Болат Нурмагамбет</span><span class="kcoef cb">1.1</span><button class="inc" style="border-color:var(--acc);color:var(--acc);cursor:default;">Помог бригаде</button></div>
-  </div>
-</div>
-
-<!-- HR -->
-<div class="screen" id="s-hr">
-  <div class="sh">Дашборд HR</div>
-  <div class="sd">HR видит только конфликты — не сверяет всё вручную. 3 расхождения из 87 табелей.</div>
-  <div class="g2">
-    <div>
-      <div class="g3" style="grid-template-columns:1fr 1fr;margin-bottom:14px;">
-        <div class="kc"><span class="kn n-a">87</span><div class="kl">Табелей получено</div></div>
-        <div class="kc"><span class="kn n-b" id="cnt-c">3</span><div class="kl">Конфликтов</div></div>
-      </div>
-      <div class="tbl">
-        <div class="tbl-h"><span class="tbl-t">Конфликты с документами</span><span class="bdg bdg-w" id="cbadge">3 требуют внимания</span></div>
-        <ul class="cl-list" style="padding:5px 12px;">
-          <li class="ci"><div class="ci-ico">⚠</div><div class="ci-txt"><div class="ci-who">Петров Д. · Бригада №3</div><div class="ci-det">В табеле 15 смен, в документах отпуск 10–20 мая</div></div><button class="rb" onclick="res(this)">Решить</button></li>
-          <li class="ci"><div class="ci-ico">⚠</div><div class="ci-txt"><div class="ci-who">Иванов С. · Бригада №3</div><div class="ci-det">Переработка 48ч — нет подтверждающего документа</div></div><button class="rb" onclick="res(this)">Решить</button></li>
-          <li class="ci"><div class="ci-ico">⚠</div><div class="ci-txt"><div class="ci-who">Ахметова Г. · Бригада №1</div><div class="ci-det">Командировка 3 дня — нет подтверждения нач. участка</div></div><button class="rb" onclick="res(this)">Решить</button></li>
-        </ul>
-      </div>
-    </div>
-    <div>
-      <div class="tbl">
-        <div class="tbl-h"><span class="tbl-t">Готово к расчёту</span><span class="bdg bdg-ok">84 табеля</span></div>
-        <table>
-          <thead><tr><th>Бригада</th><th>Чел.</th><th>KPI подписан</th><th>Статус</th></tr></thead>
-          <tbody>
-            <tr><td>Бригада №1</td><td>18</td><td>✓</td><td><span class="bdg bdg-ok">Готово</span></td></tr>
-            <tr><td>Бригада №2</td><td>22</td><td>✓</td><td><span class="bdg bdg-ok">Готово</span></td></tr>
-            <tr><td>Бригада №3</td><td>12</td><td>—</td><td><span class="bdg bdg-w">2 конфликта</span></td></tr>
-            <tr><td>Бригада №4</td><td>20</td><td>✓</td><td><span class="bdg bdg-ok">Готово</span></td></tr>
-            <tr><td>Бригада №5</td><td>15</td><td>—</td><td><span class="bdg bdg-i">Ожидаем</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- EXPORT -->
-<div class="screen" id="s-export">
-  <div class="sh">Выгрузка — бухгалтер</div>
-  <div class="sd">Готовый файл для 1С. Данные прошли три уровня проверки. KPI-протокол подписан. Enbek.kz уже обновлён — автоматически.</div>
-  <div class="exp-card">
-    <div class="exp-row"><span class="ek">Период</span><span class="ev">Май 2025</span></div>
-    <div class="exp-row"><span class="ek">Табелей подписано</span><span class="ev ok">84 / 87</span></div>
-    <div class="exp-row"><span class="ek">KPI-протоколы подписаны</span><span class="ev ok">4 из 5 бригад</span></div>
-    <div class="exp-row"><span class="ek">Конфликтов не решено</span><span class="ev warn" id="rc">3 (нужно решить)</span></div>
-    <div class="exp-row"><span class="ek">Проверено HR</span><span class="ev ok">Да</span></div>
-    <div class="exp-row"><span class="ek">Юридические подписи</span><span class="ev ok">ЭЦП · Закон РК</span></div>
-
-    <!-- ENBEK ROW — ключевой момент -->
-    <div class="enbek-row">
-      <span class="ek">Enbek.kz (ЕСУТД)</span>
-      <div class="enbek-badge">
-        <div class="dot-pulse"></div>
-        Обновляется автоматически · не требует действий HR
-      </div>
-    </div>
-
-    <div class="exp-row"><span class="ek">Итоговый ФОТ</span><span class="ev">47 284 000 ₸</span></div>
-    <div class="exp-btns">
-      <button class="exp-main" onclick="doExp(this)">Выгрузить в 1С</button>
-      <button class="exp-sec" onclick="doExp(this)">Скачать Excel</button>
-    </div>
-    <div class="ok-banner" id="exp-ok">✓ Файл сформирован и передан в 1С.</div>
-  </div>
-</div>
-
-<script>
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('s-'+id).classList.add('on');const m={home:0,hire:1,worker:2,foreman:3,hr:4,export:5};document.querySelectorAll('.tab')[m[id]].classList.add('active');}
-
-function pullIIN(){
-  const v=document.getElementById('iin-input').value.trim();
-  if(!v){document.getElementById('iin-input').style.borderColor='var(--bad)';return;}
-  document.getElementById('iin-input').style.borderColor='var(--acc)';
-  document.getElementById('data-pulled').classList.add('on');
-  document.getElementById('num3').style.background='var(--acc)';
-  document.getElementById('num3').style.color='#000';
-  document.getElementById('card3').classList.add('active');
-  document.getElementById('btn-step4').disabled=false;
-  document.getElementById('ic3a').textContent='✓';document.getElementById('ic3a').className='status-icon s-ok';
-  document.getElementById('tx3a').textContent='Трудовой договор сформирован — готов к отправке';
-  document.getElementById('tx3a').style.color='var(--txt)';
-}
-
-function nextStep(n){
-  if(n===4){
-    document.getElementById('btn-step4').disabled=true;
-    document.getElementById('btn-step4').textContent='✓ Отправлено';
-    document.getElementById('num4').style.background='var(--acc)';document.getElementById('num4').style.color='#000';
-    document.getElementById('card4').classList.add('active');
-    document.getElementById('btn-step5').disabled=false;
-    document.getElementById('ic4a').textContent='●';document.getElementById('ic4a').className='status-icon';document.getElementById('ic4a').style.background='rgba(255,140,66,.2)';document.getElementById('ic4a').style.color='var(--warn)';
-    document.getElementById('tx4a').textContent='Уведомление отправлено в eGov Mobile — ожидаем подпись';
-    document.getElementById('tx4a').style.color='var(--warn)';
+  :root {
+    --bg: #f5f3ee;
+    --dark: #0d1117;
+    --acc: #00b87a;
+    --acc2: #007a52;
+    --txt: #1a2030;
+    --mut: #6b7280;
+    --bord: #e2ddd5;
+    --surf: #ffffff;
+    --bad: #ff3d57;
+    --warn: #ff8c42;
   }
-  if(n===5){
-    document.getElementById('btn-step5').disabled=true;
-    document.getElementById('btn-step5').textContent='✓ Подписано';
-    document.getElementById('ic4a').textContent='✓';document.getElementById('ic4a').className='status-icon s-ok';
-    document.getElementById('tx4a').textContent='Договор подписан · Face ID · 28.05 в 15:03';
-    document.getElementById('tx4a').style.color='var(--ok)';
-    document.getElementById('card4').classList.remove('active');document.getElementById('card4').classList.add('done');
-    document.getElementById('num5').style.background='var(--acc)';document.getElementById('num5').style.color='#000';
-    document.getElementById('card5').classList.add('done');
-    document.getElementById('ic5a').textContent='✓';document.getElementById('ic5a').className='status-icon s-ok';
-    document.getElementById('tx5a').textContent='Договор зарегистрирован в ЕСУТД · автоматически';
-    document.getElementById('tx5a').style.color='var(--ok)';
-    setTimeout(()=>document.getElementById('enbek-auto').classList.add('on'),400);
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Golos Text', sans-serif;
+    background: var(--bg);
+    color: var(--txt);
+    min-height: 100vh;
   }
-}
-
-function calc(){
-  const f=+document.getElementById('w-f').value||0,n=+document.getElementById('w-n').value||0,h=+document.getElementById('w-h').value||0,s=+document.getElementById('w-s').value||0;
-  const t=f*24000+n*1800+h*28000+s*8000;
-  document.getElementById('sal-a').textContent=t.toLocaleString('ru-RU')+' ₸';
-  document.getElementById('kpi-b').textContent=Math.round(t*.1).toLocaleString('ru-RU')+' ₸';
-  const w=document.getElementById('warn-msg');
-  if(f>13){w.classList.add('on');document.getElementById('kpi-c').textContent='0.7 — инцидент';}
-  else{w.classList.remove('on');document.getElementById('kpi-c').textContent='1.0 — полная премия';}
-}
-
-function sendT(){const b=document.getElementById('send-btn');b.textContent='✓ Отправлено начальнику участка';b.style.background='var(--ok)';b.disabled=true;document.getElementById('cnt-s').textContent='10';}
-function apr(btn){btn.textContent='✓ Подтверждено';btn.style.cssText='background:rgba(0,184,122,.1);color:var(--ok);font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;border:none;cursor:default;';btn.disabled=true;}
-function fix(btn){const r=btn.closest('tr');r.cells[5].innerHTML='<span class="dot d-ok"></span>Исправлен';btn.textContent='✓ Исправлен';btn.style.cssText='background:rgba(0,184,122,.1);color:var(--ok);font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;border:none;cursor:default;';btn.disabled=true;}
-function addInc(btn){btn.textContent='⚠ Зафиксирован';btn.style.cssText='font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;border:1px solid var(--warn);color:var(--warn);background:rgba(255,140,66,.08);cursor:default;';btn.disabled=true;const r=btn.closest('.km-row');r.querySelector('.kcoef').textContent='0.7';r.querySelector('.kcoef').className='kcoef cl';}
-let res_cnt=0;function res(btn){btn.textContent='✓ Решено';btn.classList.add('done');btn.disabled=true;res_cnt++;const rem=3-res_cnt;document.getElementById('cnt-c').textContent=rem;const b=document.getElementById('cbadge');if(rem===0){b.textContent='Все решены';b.className='bdg bdg-ok';document.getElementById('rc').textContent='0';document.getElementById('rc').className='ev ok';}else b.textContent=rem+' требуют внимания';}
-function doExp(btn){btn.textContent='Формируем...';btn.disabled=true;setTimeout(()=>{document.getElementById('exp-ok').classList.add('on');btn.textContent='✓ Выгружено';},1000);}
-</script>
-</body>
-</html>
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--bord);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 700; color: var(--acc); }
+  .logo span { color: var(--txt); }
+  .tabs {
+    display: flex; gap: 2px; background: var(--surf); padding: 4px; border-radius: 10px; border: 1px solid var(--bord);
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 7px 13px; border-radius: 7px; border: none; background: transparent; color: var(--mut);
+    font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap;
+  }
+  .tab.active { background: var(--acc); color: #000; font-weight: 700; }
+  .screen { display: none; padding: 32px; max-width: 1020px; margin: 0 auto; }
+  .screen.on { display: block; }
+  .sh { font-family: 'Unbounded', sans-serif; font-size: 20px; margin-bottom: 5px; }
+  .sd { color: var(--mut); font-size: 13px; margin-bottom: 20px; }
+  
+  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 24px; }
+  .stat { background: var(--surf); border: 1px solid var(--bord); border-radius: 12px; padding: 16px; text-align: center; }
+  .stat-n { font-family: 'Unbounded', sans-serif; font-size: 28px; font-weight: 700; color: var(--acc); }
+  .stat-l { font-size: 11px; color: var(--mut); }
+  
+  .tbl { background: var(--surf); border: 1px solid var(--bord); border-radius: 12px; overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; min-width: 600px; }
+  th { text-align: left; padding: 10px 12px; font-size: 10px; font-weight: 700; color: var(--mut); background: rgba(0,0,0,.02); }
+  td { padding: 10px 12px; font-size: 12px; border-top: 1px solid var(--bord); }
+  .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; }
+  .d-ok { background: var(--acc); }
+  .d-w { background: var(--warn); }
+  .badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 12px; }
+  .badge-w { background: rgba(255,140,66,.15); color: var(--warn); }
+  .badge-ok { background: rgba(0,184,122,.12); color: var(--acc2); }
+  
+  .phone { max-width: 380px; margin: 0 auto; background: var(--surf); border: 1px solid var(--bord); border-radius: 20px; padding: 20px; }
+  .fl { margin-bottom: 12px; }
+  .fl-lb { font-size: 10px; color: var(--mut); margin-bottom: 4px; text-transform: uppercase; }
+  .fl-in { width: 100%; background: var(--bg); border: 1px solid var(--bord); border-radius: 6px; padding: 8px 11px; font-size: 13px; }
+  .sal { background: rgba(0,184,122,.07); border-radius: 10px; padding: 12px; text-align: center; margin: 14px 0; }
+  .sal-a { font-family:
