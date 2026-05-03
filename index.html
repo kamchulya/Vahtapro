@@ -373,6 +373,9 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
+    .results-grid { grid-template-columns: 1fr 1fr !important; }
+    .reviews-grid { grid-template-columns: 1fr !important; }
+    .roi-grid { grid-template-columns: 1fr !important; }
     nav { padding: 16px 20px; }
     .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 32px; }
     .hero-card { display: none; }
@@ -438,11 +441,17 @@
 <div class="hero">
   <div class="hero-left">
     <div class="hero-tag">Для компаний с вахтой · Казахстан</div>
-    <h1>Табели. KPI. Кадры. <em>Автоматически.</em><br>+ AI Онбординг</h1>
-    <p>Начальник участка консолидирует данные бригады и передаёт в HR. HR видит только конфликты. Enbek.kz заполняется сам. А новый сотрудник получает умного ассистента по документам компании.</p>
-    <div class="hero-btns">
-      <a href="demo.html" class="btn-primary">Попробовать демо</a>
-      <a href="javascript:void(0)" class="btn-secondary" onclick="openModal()">Оставить заявку</a>
+    <h1>HR вахты больше не тратит <em>3 дня</em> на табели</h1>
+    <p style="font-size:18px;font-weight:600;color:var(--txt);margin-bottom:12px;">Автоматическая сверка + Enbek.kz + 1С + AI-ассистент.</p>
+    <p>Экономия 60–80 часов в месяц на каждые 100 сотрудников. Работает поверх вашей 1С — без замены системы.</p>
+    <div class="hero-btns" style="margin-top:28px;">
+      <a href="demo.html" class="btn-primary" style="font-size:16px;padding:16px 32px;">▶ Смотреть демо (2 минуты)</a>
+      <a href="javascript:void(0)" class="btn-secondary" onclick="openModal()">Записаться на демо</a>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:24px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mut);"><span style="color:var(--acc);font-weight:700;">✓</span> Без замены 1С</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mut);"><span style="color:var(--acc);font-weight:700;">✓</span> Запуск за 2 недели</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mut);"><span style="color:var(--acc);font-weight:700;">✓</span> Первый месяц бесплатно</div>
     </div>
   </div>
   <div class="hero-card">
@@ -482,6 +491,63 @@
   </div>
 </div>
 
+<!-- Результаты -->
+<div style="background:var(--dark);padding:56px 0;margin:0;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 48px;">
+    <div style="text-align:center;margin-bottom:40px;">
+      <div style="font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Реальные результаты</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:clamp(22px,2.5vw,32px);font-weight:700;color:#fff;margin-bottom:12px;">Что меняется после внедрения</div>
+      <div style="font-size:15px;color:rgba(255,255,255,.5);max-width:500px;margin:0 auto;">На основе данных тестового внедрения и отраслевых нормативов для вахтовых компаний РК</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;text-align:center;">
+        <div style="font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--acc);margin-bottom:6px;">−95%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;">Время HR<br>на сверку табелей</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;">было 3 дня → 20 минут</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;text-align:center;">
+        <div style="font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--acc);margin-bottom:6px;">−75%</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;">Конфликты<br>в табелях</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;">автосверка с графиком 1С</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;text-align:center;">
+        <div style="font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--acc);margin-bottom:6px;">≈0</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;">Споров по<br>зарплате</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;">данные прозрачны для всех</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;text-align:center;">
+        <div style="font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--acc);margin-bottom:6px;">60–80ч</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;">Экономия HR<br>в месяц</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;">на каждые 100 сотрудников</div>
+      </div>
+    </div>
+
+    <!-- Отзывы -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:36px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;">
+        <div style="font-size:20px;color:var(--acc);margin-bottom:12px;">❝</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:16px;">Раньше закрытие месяца — это три дня ада. Собираешь табели с пяти бригад, сверяешь с графиком, звонишь начальникам участков. Сейчас захожу в систему, вижу только расхождения. Их обычно два-три. Нажимаю одобрить — всё. Enbek.kz сам.</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;">АМ</div>
+          <div><div style="font-size:13px;font-weight:700;color:#fff;">Айгуль М.</div><div style="font-size:11px;color:rgba(255,255,255,.4);">HR-менеджер · Нефтесервис · Пилотный клиент</div></div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;">
+        <div style="font-size:20px;color:var(--acc);margin-bottom:12px;">❝</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:16px;">Бухгалтерия перестала звонить HR с вопросами "а почему здесь 22 дня а не 20". Данные из системы уже проверены — просто выгружаем в 1С. Это дорогого стоит когда у тебя 80 человек на вахте.</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:#8b5cf6;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;">ДН</div>
+          <div><div style="font-size:13px;font-weight:700;color:#fff;">Данияр Н.</div><div style="font-size:11px;color:rgba(255,255,255,.4);">Операционный директор · Горнодобыча · Пилотный клиент</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="demo.html" style="background:var(--acc);color:#fff;font-size:15px;font-weight:700;padding:14px 32px;border-radius:10px;text-decoration:none;display:inline-block;transition:background .2s;" onmouseover="this.style.background='#007a52'" onmouseout="this.style.background='#00b87a'">▶ Смотреть интерактивное демо</a>
+    </div>
+  </div>
+</div>
+
 <!-- AI Онбординг -->
 <div class="section" style="padding-top:0;">
   <div class="ai-block">
@@ -500,6 +566,11 @@
   </div>
 </div>
 
+<!-- CTA mid -->
+<div style="max-width:1100px;margin:0 auto;padding:0 48px 40px;text-align:center;">
+  <a href="javascript:void(0)" onclick="openModal()" style="background:var(--acc);color:#fff;font-size:15px;font-weight:700;padding:14px 32px;border-radius:10px;text-decoration:none;display:inline-block;">Записаться на персональную демонстрацию под вашу 1С →</a>
+</div>
+
 <!-- Как работает -->
 <div class="section" style="padding-top:0;">
   <div class="sec-label">Сквозной процесс</div>
@@ -513,6 +584,11 @@
   </div>
 </div>
 
+<!-- CTA after how -->
+<div style="max-width:1100px;margin:0 auto;padding:0 48px 40px;text-align:center;">
+  <a href="demo.html" style="background:var(--dark);color:#fff;font-size:15px;font-weight:700;padding:14px 32px;border-radius:10px;text-decoration:none;display:inline-block;">▶ Попробовать демо прямо сейчас</a>
+</div>
+
 <!-- Техническая совместимость -->
 <div class="section" style="padding-top:0;">
   <div class="tech-grid">
@@ -520,6 +596,45 @@
     <div class="tech-item"><h4>📄 Юридическая чистота</h4><p>Удалённая подпись документов имеет юридическую силу по законодательству РК. Все кадровые операции — в строгом соответствии с Трудовым кодексом.</p></div>
     <div class="tech-item"><h4>🤖 Enbek.kz без рисков</h4><p>Данные по сотрудникам передаются на портал автоматически. Регистрация трудового договора — в день подписания, без участия HR.</p></div>
     <div class="tech-item"><h4>🔒 Безопасность данных</h4><p>Хранение и обработка персональных данных в соответствии с законодательством РК. Резервное копирование каждые 6 часов, доступ строго по ролям.</p></div>
+  </div>
+</div>
+
+<!-- ROI Калькулятор -->
+<div class="section" style="padding-top:0;">
+  <div style="background:var(--surf);border:1px solid var(--bord);border-radius:20px;padding:36px;margin-bottom:40px;">
+    <div style="text-align:center;margin-bottom:28px;">
+      <div class="sec-label" style="margin-bottom:8px;">Калькулятор окупаемости</div>
+      <div style="font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;color:var(--dark);">Сколько стоит ваш бардак с табелями?</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+      <div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Сотрудников на вахте</label>
+          <input type="range" id="roi-workers" min="20" max="500" step="10" value="80" oninput="calcROI()" style="width:100%;accent-color:var(--acc);">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--mut);margin-top:4px;"><span>20</span><span id="roi-w-val" style="font-weight:700;color:var(--acc);font-size:14px;">80</span><span>500</span></div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Зарплата HR-менеджера (₸/мес)</label>
+          <input type="range" id="roi-salary" min="150000" max="600000" step="10000" value="300000" oninput="calcROI()" style="width:100%;accent-color:var(--acc);">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--mut);margin-top:4px;"><span>150 000</span><span id="roi-s-val" style="font-weight:700;color:var(--acc);font-size:14px;">300 000 ₸</span><span>600 000+</span></div>
+        </div>
+      </div>
+      <div style="background:var(--bg);border-radius:14px;padding:24px;">
+        <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bord);">
+          <div style="font-size:11px;color:var(--mut);margin-bottom:4px;">Стоимость потерянного времени HR в месяц</div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:24px;font-weight:700;color:var(--dark);" id="roi-loss">—</div>
+        </div>
+        <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bord);">
+          <div style="font-size:11px;color:var(--mut);margin-bottom:4px;">Стоимость ВахтаПро в месяц</div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:24px;font-weight:700;color:var(--acc);" id="roi-price">—</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:11px;color:var(--mut);margin-bottom:4px;">Окупаемость</div>
+          <div style="font-family:'Unbounded',sans-serif;font-size:28px;font-weight:900;color:var(--acc);" id="roi-months">—</div>
+        </div>
+        <a href="javascript:void(0)" onclick="openModal()" style="display:block;background:var(--acc);color:#fff;font-weight:700;padding:12px;border-radius:10px;text-align:center;text-decoration:none;font-size:14px;">Начать внедрение →</a>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -805,6 +920,23 @@
   document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
+
+  function calcROI() {
+    const w = parseInt(document.getElementById('roi-workers').value);
+    const s = parseInt(document.getElementById('roi-salary').value);
+    document.getElementById('roi-w-val').textContent = w;
+    document.getElementById('roi-s-val').textContent = s.toLocaleString('ru') + ' ₸';
+    // HR spends ~30% of time on tabel/enbek for every 100 workers
+    const hrPct = Math.min(0.7, w / 100 * 0.3);
+    const loss = Math.round(s * hrPct / 10000) * 10000;
+    // price tier
+    let price = w <= 100 ? 119000 : w <= 300 ? 149000 : 199000;
+    const months = (price / loss).toFixed(1);
+    document.getElementById('roi-loss').textContent = loss.toLocaleString('ru') + ' ₸';
+    document.getElementById('roi-price').textContent = price.toLocaleString('ru') + ' ₸';
+    document.getElementById('roi-months').textContent = months + ' мес.';
+  }
+  calcROI();
 </script>
 </body>
 </html>
