@@ -23,6 +23,8 @@
     color: var(--txt);
     overflow-x: hidden;
   }
+
+  /* ── NAV ── */
   nav {
     display: flex; align-items: center; justify-content: space-between;
     padding: 20px 48px;
@@ -33,8 +35,7 @@
   .logo {
     font-family: 'Unbounded', sans-serif;
     font-size: 18px; font-weight: 700;
-    color: var(--acc);
-    letter-spacing: -0.5px;
+    color: var(--acc); letter-spacing: -0.5px;
   }
   .logo span { color: var(--txt); }
   .nav-cta {
@@ -45,6 +46,8 @@
     transition: background .2s;
   }
   .nav-cta:hover { background: var(--acc2); }
+
+  /* ── HERO ── */
   .hero {
     max-width: 1100px; margin: 0 auto;
     padding: 60px 48px 40px;
@@ -64,20 +67,14 @@
   .hero h1 {
     font-family: 'Unbounded', sans-serif;
     font-size: clamp(28px, 3.5vw, 46px);
-    font-weight: 900;
-    line-height: 1.12;
-    letter-spacing: -1.5px;
-    margin-bottom: 20px;
+    font-weight: 900; line-height: 1.12;
+    letter-spacing: -1.5px; margin-bottom: 20px;
     color: var(--dark);
   }
-  .hero h1 em {
-    font-style: normal;
-    color: var(--acc);
-  }
+  .hero h1 em { font-style: normal; color: var(--acc); }
   .hero p {
     font-size: 17px; color: var(--mut);
-    line-height: 1.7; margin-bottom: 32px;
-    max-width: 480px;
+    line-height: 1.7; margin-bottom: 32px; max-width: 480px;
   }
   .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
   .btn-primary {
@@ -85,7 +82,7 @@
     font-size: 15px; font-weight: 700;
     padding: 14px 28px; border-radius: 10px;
     border: none; cursor: pointer; text-decoration: none;
-    display: inline-block;
+    display: inline-block; transition: background .2s;
   }
   .btn-primary:hover { background: var(--acc2); }
   .btn-secondary {
@@ -94,25 +91,31 @@
     padding: 14px 28px; border-radius: 10px;
     border: 1.5px solid var(--bord); cursor: pointer;
     text-decoration: none; display: inline-block;
+    transition: border-color .2s, color .2s;
   }
   .btn-secondary:hover { border-color: var(--acc); color: var(--acc); }
+
+  /* Hero card */
   .hero-card {
-    background: var(--dark);
-    border-radius: 20px;
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
+    background: var(--dark); border-radius: 20px;
+    padding: 32px; position: relative; overflow: hidden;
   }
   .hero-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--acc), #00d4aa);
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--acc), #00d4aa);
   }
   .hc-label {
-    font-size: 11px; font-weight: 700;
-    color: var(--acc); text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 20px;
+    font-size: 11px; font-weight: 700; color: var(--acc);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .hc-demo-badge {
+    display: inline-block;
+    background: rgba(255,200,0,.12);
+    border: 1px solid rgba(255,200,0,.3);
+    color: #f5c400;
+    font-size: 10px; font-weight: 700; letter-spacing: .5px;
+    padding: 3px 10px; border-radius: 12px;
+    margin-bottom: 16px;
   }
   .hc-row {
     display: flex; align-items: center; justify-content: space-between;
@@ -132,7 +135,8 @@
   }
   .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--acc); animation: p 1.5s infinite; }
   @keyframes p { 0%,100%{opacity:1} 50%{opacity:.3} }
-  
+
+  /* ── SECTIONS ── */
   .section { max-width: 1100px; margin: 0 auto; padding: 48px 48px; }
   .sec-label { font-size: 11px; font-weight: 700; color: var(--acc); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
   .sec-h {
@@ -142,195 +146,232 @@
     margin-bottom: 12px; color: var(--dark);
   }
   .sec-sub { font-size: 16px; color: var(--mut); line-height: 1.6; max-width: 600px; margin-bottom: 40px; }
-  
+
+  /* ── CLIENTS MARQUEE ── */
+  .clients-section {
+    border-top: 1px solid var(--bord);
+    border-bottom: 1px solid var(--bord);
+    padding: 36px 0;
+    background: var(--surf);
+    overflow: hidden;
+  }
+  .clients-label {
+    text-align: center;
+    font-size: 11px; font-weight: 700;
+    color: var(--mut); text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 28px;
+  }
+  .marquee-wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-wrap::before,
+  .marquee-wrap::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0;
+    width: 120px; z-index: 2; pointer-events: none;
+  }
+  .marquee-wrap::before { left: 0; background: linear-gradient(to right, var(--surf), transparent); }
+  .marquee-wrap::after  { right: 0; background: linear-gradient(to left, var(--surf), transparent); }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .client-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 0 48px;
+    border-right: 1px solid var(--bord);
+    cursor: default;
+    transition: opacity .2s;
+    opacity: .6;
+  }
+  .client-card:hover { opacity: 1; }
+
+  .client-logo-svg {
+    width: 40px; height: 40px; flex-shrink: 0;
+  }
+  .client-name-wrap { display: flex; flex-direction: column; }
+  .client-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--dark); letter-spacing: -.3px;
+    line-height: 1.2;
+  }
+  .client-type { font-size: 10px; color: var(--mut); margin-top: 3px; }
+
+  /* ── PILLARS ── */
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .pillar {
-    background: var(--surf);
-    border: 1px solid var(--bord);
+    background: var(--surf); border: 1px solid var(--bord);
     border-radius: 16px; padding: 28px;
   }
-  .pillar-num {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: var(--acc); margin-bottom: 14px;
-  }
+  .pillar-num { font-family: 'Unbounded', sans-serif; font-size: 13px; font-weight: 700; color: var(--acc); margin-bottom: 14px; }
   .pillar h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
   .pillar p { font-size: 13px; color: var(--mut); line-height: 1.65; }
-  
+
+  /* ── HOW ── */
   .how-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin: 40px 0; }
   .how-step { text-align: center; background: var(--surf); border-radius: 16px; padding: 20px 12px; border: 1px solid var(--bord); }
   .how-num { width: 48px; height: 48px; background: var(--acc); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto 12px; }
   .how-role { font-weight: 700; margin-bottom: 6px; }
   .how-desc { font-size: 11px; color: var(--mut); }
-  
+
+  /* ── AI BLOCK ── */
   .ai-block {
     background: linear-gradient(135deg, #1a2030 0%, #0d1117 100%);
-    border-radius: 24px;
-    padding: 48px;
-    color: #fff;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    margin: 40px 0;
+    border-radius: 24px; padding: 48px; color: #fff;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 48px; margin: 40px 0;
   }
   .ai-left h3 {
     font-family: 'Unbounded', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 16px;
+    font-size: 28px; font-weight: 700; margin-bottom: 16px;
   }
-  .ai-left p { color: rgba(255,255,255,.7); line-height: 1.7; margin-bottom: 24px; }
+  .ai-left p { color: rgba(255,255,255,.7); line-height: 1.7; margin-bottom: 16px; }
   .ai-badge {
     display: inline-flex;
     background: rgba(0,184,122,.2);
     border: 1px solid rgba(0,184,122,.4);
-    border-radius: 30px;
-    padding: 6px 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--acc);
+    border-radius: 30px; padding: 6px 16px;
+    font-size: 12px; font-weight: 600;
+    color: var(--acc); margin-bottom: 16px;
   }
   .chat-mock {
     background: rgba(255,255,255,.05);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 16px; padding: 20px;
     border: 1px solid rgba(255,255,255,.1);
   }
   .chat-msg {
     background: rgba(255,255,255,.1);
-    border-radius: 12px;
-    padding: 10px 14px;
-    margin-bottom: 12px;
-    font-size: 13px;
+    border-radius: 12px; padding: 10px 14px;
+    margin-bottom: 12px; font-size: 13px;
   }
   .chat-msg.bot { background: var(--acc); color: #000; }
-  
+  .chat-msg:last-child { margin-bottom: 0; }
+
+  /* ── TECH ── */
   .tech-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    background: var(--surf);
-    border-radius: 20px;
-    padding: 32px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; background: var(--surf);
+    border-radius: 20px; padding: 32px;
     border: 1px solid var(--bord);
   }
-  .tech-item {
-    border-left: 3px solid var(--acc);
-    padding-left: 16px;
-  }
+  .tech-item { border-left: 3px solid var(--acc); padding-left: 16px; }
   .tech-item h4 { font-size: 14px; margin-bottom: 6px; }
   .tech-item p { font-size: 12px; color: var(--mut); }
 
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-top: 20px;
-  }
+  /* ── PRICING ── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
   .price-card {
-    background: var(--surf);
-    border: 1px solid var(--bord);
-    border-radius: 20px;
-    padding: 28px;
+    background: var(--surf); border: 1.5px solid var(--bord);
+    border-radius: 20px; padding: 28px; position: relative;
   }
-  .price-title {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 8px;
+  .price-card.featured { border-color: var(--acc); }
+  .price-badge {
+    position: absolute; top: -12px; left: 28px;
+    background: var(--acc); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: .5px;
+    padding: 4px 14px; border-radius: 20px;
+    text-transform: uppercase;
   }
-  .price-amount {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 36px;
-    font-weight: 900;
-    color: var(--dark);
-    margin: 16px 0 4px;
-  }
-  .price-amount span {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--mut);
-  }
-  .price-period {
-    font-size: 13px;
-    color: var(--mut);
-    margin-bottom: 20px;
-  }
-  .price-features {
-    list-style: none;
-    margin: 20px 0;
-  }
+  .price-title { font-family: 'Unbounded', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .price-amount { font-family: 'Unbounded', sans-serif; font-size: 36px; font-weight: 900; color: var(--dark); margin: 16px 0 4px; }
+  .price-amount span { font-size: 14px; font-weight: 400; color: var(--mut); }
+  .price-period { font-size: 13px; color: var(--mut); margin-bottom: 20px; }
+  .price-features { list-style: none; margin: 20px 0; }
   .price-features li {
-    font-size: 13px;
-    padding: 8px 0;
+    font-size: 13px; padding: 8px 0;
     border-bottom: 1px solid var(--bord);
-    display: flex;
-    gap: 8px;
+    display: flex; gap: 8px;
   }
-  .price-features li::before {
-    content: "✓";
-    color: var(--acc);
-    font-weight: 700;
-  }
+  .price-features li::before { content: "✓"; color: var(--acc); font-weight: 700; }
   .price-btn {
-    width: 100%;
-    background: var(--acc);
-    color: #fff;
-    font-weight: 700;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    display: inline-block;
-    text-decoration: none;
+    width: 100%; background: var(--acc); color: #fff;
+    font-weight: 700; padding: 12px; border-radius: 10px;
+    border: none; cursor: pointer; text-align: center;
+    display: inline-block; text-decoration: none;
+    transition: background .2s;
   }
+  .price-btn:hover { background: var(--acc2); }
   .price-btn.outline {
-    background: transparent;
-    border: 1.5px solid var(--bord);
-    color: var(--txt);
+    background: transparent; border: 1.5px solid var(--bord); color: var(--txt);
   }
-  
-  .setup-wrap {
-    margin-top: 40px;
-    background: var(--surf);
-    border-radius: 20px;
-    border: 1px solid var(--bord);
-    padding: 28px;
+  .price-btn.outline:hover { border-color: var(--acc); color: var(--acc); background: transparent; }
+
+  /* ── SETUP ── */
+  .setup-wrap { margin-top: 40px; background: var(--surf); border-radius: 20px; border: 1px solid var(--bord); padding: 28px; }
+  .setup-title { font-family: 'Unbounded', sans-serif; font-size: 18px; margin-bottom: 20px; }
+  .setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .setup-item { border-left: 3px solid var(--acc); padding-left: 16px; }
+  .setup-price { font-size: 28px; font-weight: 700; margin: 8px 0; }
+  .setup-desc { font-size: 12px; color: var(--mut); }
+  .setup-note { margin-top: 20px; font-size: 12px; color: var(--acc); background: rgba(0,184,122,.08); padding: 10px; border-radius: 8px; text-align: center; }
+
+  /* ── CTA ── */
+  .cta-wrap { background: var(--acc); border-radius: 24px; padding: 56px; text-align: center; color: #fff; }
+  .cta-wrap h2 { font-family: 'Unbounded', sans-serif; margin-bottom: 16px; font-size: clamp(20px, 2.5vw, 30px); }
+  .cta-wrap p { margin-bottom: 28px; opacity: 0.9; }
+  .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-white { background: #fff; color: var(--acc2); padding: 12px 28px; border-radius: 40px; text-decoration: none; font-weight: 700; transition: opacity .2s; display: inline-block; }
+  .btn-white:hover { opacity: .9; }
+  .btn-outline-w { border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 12px 28px; border-radius: 40px; text-decoration: none; display: inline-block; transition: background .2s; }
+  .btn-outline-w:hover { background: rgba(255,255,255,.1); }
+
+  /* ── FORM MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 999;
+    align-items: center; justify-content: center;
   }
-  .setup-title {
-    font-family: 'Unbounded', sans-serif;
-    font-size: 18px;
-    margin-bottom: 20px;
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 20px; padding: 40px;
+    max-width: 460px; width: 90%; position: relative;
   }
-  .setup-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; cursor: pointer;
+    font-size: 20px; color: var(--mut);
   }
-  .setup-item {
-    border-left: 3px solid var(--acc);
-    padding-left: 16px;
+  .modal h3 { font-family: 'Unbounded', sans-serif; font-size: 20px; margin-bottom: 6px; }
+  .modal p { font-size: 14px; color: var(--mut); margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 12px 14px; border-radius: 10px;
+    border: 1.5px solid var(--bord); font-size: 14px;
+    font-family: 'Golos Text', sans-serif; outline: none;
+    transition: border-color .2s;
   }
-  .setup-price {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 8px 0;
+  .form-group input:focus, .form-group select:focus { border-color: var(--acc); }
+  .form-submit {
+    width: 100%; background: var(--acc); color: #fff;
+    font-weight: 700; font-size: 15px; padding: 14px;
+    border-radius: 10px; border: none; cursor: pointer;
+    transition: background .2s; margin-top: 8px;
   }
-  .setup-desc {
-    font-size: 12px;
-    color: var(--mut);
-  }
-  .setup-note {
-    margin-top: 20px;
-    font-size: 12px;
-    color: var(--acc);
-    background: rgba(0,184,122,.08);
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-  }
-  
+  .form-submit:hover { background: var(--acc2); }
+  .form-success { text-align: center; display: none; }
+  .form-success .check { font-size: 48px; margin-bottom: 12px; }
+  .form-success h4 { font-family: 'Unbounded', sans-serif; font-size: 18px; margin-bottom: 8px; }
+  .form-success p { font-size: 14px; color: var(--mut); }
+
+  /* ── FOOTER ── */
+  footer { text-align: center; padding: 24px; font-size: 12px; color: var(--mut); border-top: 1px solid var(--bord); }
+  footer a { color: var(--acc); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 16px 20px; }
     .hero { grid-template-columns: 1fr; padding: 40px 20px; gap: 32px; }
@@ -340,16 +381,58 @@
     .how-grid { grid-template-columns: 1fr 1fr; }
     .ai-block { grid-template-columns: 1fr; padding: 32px; }
     .tech-grid { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr !important; }
     .setup-grid { grid-template-columns: 1fr; }
+    .clients-section { padding: 32px 20px; }
+    .clients-row { gap: 24px; }
+    .cta-wrap { padding: 36px 20px; }
   }
 </style>
 </head>
 <body>
 
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-form-content">
+      <h3>Оставить заявку</h3>
+      <p>Свяжемся в течение одного рабочего дня. Бесплатно покажем демо под ваш процесс.</p>
+      <div class="form-group">
+        <label>Название компании</label>
+        <input type="text" placeholder="ТОО «Ваша компания»" id="f-company">
+      </div>
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" placeholder="Имя и фамилия" id="f-name">
+      </div>
+      <div class="form-group">
+        <label>Телефон (WhatsApp)</label>
+        <input type="tel" placeholder="+7 700 000 00 00" id="f-phone">
+      </div>
+      <div class="form-group">
+        <label>Количество сотрудников</label>
+        <select id="f-size">
+          <option value="">— выберите —</option>
+          <option>до 50</option>
+          <option>50–100</option>
+          <option>100–300</option>
+          <option>300+</option>
+        </select>
+      </div>
+      <button class="form-submit" onclick="submitForm()">Отправить заявку →</button>
+    </div>
+    <div class="form-success" id="form-success">
+      <div class="check">✅</div>
+      <h4>Заявка принята!</h4>
+      <p>Мы напишем вам в WhatsApp в течение рабочего дня. Спасибо!</p>
+    </div>
+  </div>
+</div>
+
 <nav>
   <div class="logo">Вахта<span>Про</span></div>
-  <a href="demo.html" class="nav-cta" target="_blank">Открыть демо</a>
+  <a href="demo.html" class="nav-cta">Открыть демо</a>
 </nav>
 
 <div class="hero">
@@ -358,19 +441,22 @@
     <h1>Табели. KPI. Кадры. <em>Автоматически.</em><br>+ AI Онбординг</h1>
     <p>Начальник участка консолидирует данные бригады и передаёт в HR. HR видит только конфликты. Enbek.kz заполняется сам. А новый сотрудник получает умного ассистента по документам компании.</p>
     <div class="hero-btns">
-      <a href="demo.html" class="btn-primary" target="_blank">Попробовать демо</a>
-      <a href="mailto:support@lunatargetai.com" class="btn-secondary">Связаться</a>
+      <a href="demo.html" class="btn-primary">Попробовать демо</a>
+      <a href="javascript:void(0)" class="btn-secondary" onclick="openModal()">Оставить заявку</a>
     </div>
   </div>
   <div class="hero-card">
-    <div class="hc-label">Статус системы · Июнь 2026</div>
+    <div class="hc-label">Статус системы · Демо</div>
+    <div class="hc-demo-badge">⚠ Демо-данные</div>
     <div class="hc-row"><span class="hc-key">Табелей в системе (тест)</span><span class="hc-val ok">Демо-данные</span></div>
     <div class="hc-row"><span class="hc-key">Сотрудников на онбординге</span><span class="hc-val ok">84 работника</span></div>
     <div class="hc-row"><span class="hc-key">Конфликтов с документами</span><span class="hc-val">3 → HR 20 мин</span></div>
-    <div class="hc-row"><span class="hc-key">Enbek.kz</span><span class="hc-val auto"><span class="pulse"></span>Авто-синхронизация</span></div>
+    <div class="hc-row"><span class="hc-key">Enbek.kz</span><span class="hc-val auto"><span class="pulse"></span>RPA-робот</span></div>
     <div class="hc-row"><span class="hc-key">Время HR на сверку</span><span class="hc-val ok">20 мин (было 3 дня)</span></div>
   </div>
 </div>
+
+
 
 <!-- Три боли -->
 <div class="section">
@@ -378,9 +464,21 @@
   <div class="sec-h">Три главные боли — одна система</div>
   <div class="sec-sub">Работает поверх вашей 1С. HR не делает лишней работы.</div>
   <div class="pillars">
-    <div class="pillar"><div class="pillar-num">01</div><h3>Табели и KPI</h3><p>Начальник участка собирает данные по бригаде, система автоматически сверяет с графиком и отпусками. HR проверяет только расхождения. KPI по умолчанию 1.0, начальник фиксирует только инциденты.</p></div>
-    <div class="pillar"><div class="pillar-num">02</div><h3>Приём, перевод, отпуск</h3><p>Служебка с телефона → апрув директора → данные из eGov по ИИН. Договор подписывается удалённо. Enbek.kz обновляется без участия HR.</p></div>
-    <div class="pillar"><div class="pillar-num">03</div><h3>AI Онбординг</h3><p>Сотрудник задаёт вопросы чат-боту: "Сколько платят за ночные?", "Где столовая?", "Кто мой бригадир?". Бот отвечает на основе ваших внутренних документов.</p></div>
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <h3>Табели и KPI</h3>
+      <p>Начальник участка собирает данные по бригаде, система автоматически сверяет с графиком и отпусками. HR проверяет только расхождения. KPI по умолчанию 1.0 — начальник фиксирует только инциденты.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <h3>Приём, перевод, отпуск</h3>
+      <p>Служебка с телефона → апрув директора → данные из eGov по ИИН. Договор подписывается удалённо с телефона. Enbek.kz обновляется без участия HR.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <h3>AI Онбординг</h3>
+      <p>Сотрудник задаёт вопросы чат-боту: «Сколько платят за ночные?», «Где столовая?», «Кто мой бригадир?». Бот отвечает на основе ваших внутренних документов.</p>
+    </div>
   </div>
 </div>
 
@@ -411,7 +509,7 @@
     <div class="how-step"><div class="how-num">2</div><div class="how-role">Система</div><div class="how-desc">Авто-сверка с графиком и отпусками</div></div>
     <div class="how-step"><div class="how-num">3</div><div class="how-role">HR</div><div class="how-desc">Видит только конфликты, нажимает «Одобрить»</div></div>
     <div class="how-step"><div class="how-num">4</div><div class="how-role">Бухгалтер</div><div class="how-desc">Данные в 1С уже верные. Начисляет без нервов</div></div>
-    <div class="how-step"><div class="how-num">5</div><div class="how-role">Enbek.kz</div><div class="how-desc">Обновляется автоматически. HR не участвует</div></div>
+    <div class="how-step"><div class="how-num">5</div><div class="how-role">Enbek.kz</div><div class="how-desc">Обновляется RPA-роботом. HR не участвует</div></div>
   </div>
 </div>
 
@@ -419,9 +517,9 @@
 <div class="section" style="padding-top:0;">
   <div class="tech-grid">
     <div class="tech-item"><h4>⚡ 1С: Предприятие (РК)</h4><p>Интеграция через REST API или файловый обмен. Поддерживаем 1С:ЗУП, 1С:ERP, 1С:Бухгалтерию.</p></div>
-    <div class="tech-item"><h4>📄 Юридическая чистота</h4><p>Удалённая подпись документов имеет силу ЭЦП по закону РК. Данные обрабатываются по 27-й статье закона "Об информатизации".</p></div>
-    <div class="tech-item"><h4>🤖 Enbek.kz без рисков</h4><p>На старте — RPA-робот, при масштабировании — прямая интеграция с Минтруда. Регистрация договора в день подписания.</p></div>
-    <div class="tech-item"><h4>🔒 Безопасность и локализация</h4><p>Хостинг на серверах в РК (г. Астана). Резервное копирование каждые 6 часов.</p></div>
+    <div class="tech-item"><h4>📄 Юридическая чистота</h4><p>Удалённая подпись документов имеет юридическую силу по законодательству РК. Все кадровые операции — в строгом соответствии с Трудовым кодексом.</p></div>
+    <div class="tech-item"><h4>🤖 Enbek.kz без рисков</h4><p>Данные по сотрудникам передаются на портал автоматически. Регистрация трудового договора — в день подписания, без участия HR.</p></div>
+    <div class="tech-item"><h4>🔒 Безопасность данных</h4><p>Хранение и обработка персональных данных в соответствии с законодательством РК. Резервное копирование каждые 6 часов, доступ строго по ролям.</p></div>
   </div>
 </div>
 
@@ -430,8 +528,8 @@
   <div class="sec-label">Инвестиции в автоматизацию</div>
   <div class="sec-h">Прозрачные тарифы</div>
   <div class="sec-sub">Ежемесячная плата зависит только от численности. Никаких скрытых платежей.</div>
-  
-  <div class="pricing-grid">
+
+  <div class="pricing-grid" style="grid-template-columns: repeat(3,1fr);">
     <div class="price-card">
       <div class="price-title">Базовый</div>
       <div class="price-amount">119 000 ₸<span>/мес</span></div>
@@ -443,58 +541,270 @@
         <li>AI Онбординг-бот</li>
         <li>Авто-выгрузка в enbek.kz</li>
       </ul>
-      <a href="demo.html" class="price-btn outline" target="_blank">Выбрать</a>
+      <a href="javascript:void(0)" class="price-btn outline" onclick="openModal()">Оставить заявку</a>
     </div>
-    <div class="price-card">
+    <div class="price-card featured">
+      <div class="price-badge">Популярный</div>
       <div class="price-title">Профи</div>
       <div class="price-amount">149 000 ₸<span>/мес</span></div>
-      <div class="price-period">свыше 100 сотрудников</div>
+      <div class="price-period">100–300 сотрудников</div>
       <ul class="price-features">
         <li>Всё из Базового</li>
         <li>Приоритетная поддержка</li>
         <li>Расширенная аналитика</li>
         <li>Индивидуальные отчёты</li>
       </ul>
-      <a href="demo.html" class="price-btn outline" target="_blank">Выбрать</a>
+      <a href="javascript:void(0)" class="price-btn" onclick="openModal()">Оставить заявку</a>
+    </div>
+    <div class="price-card">
+      <div class="price-title">Корпоративный</div>
+      <div class="price-amount" style="font-size:26px;">по запросу</div>
+      <div class="price-period">свыше 300 сотрудников</div>
+      <ul class="price-features">
+        <li>Всё из Профи</li>
+        <li>Выделенный менеджер</li>
+        <li>SLA и гарантии доступности</li>
+        <li>Интеграция под ваши процессы</li>
+        <li>Обучение команды на месте</li>
+      </ul>
+      <a href="javascript:void(0)" class="price-btn outline" onclick="openModal()">Обсудить условия</a>
     </div>
   </div>
 
-  <!-- Разовая настройка -->
   <div class="setup-wrap">
     <div class="setup-title">🔧 Разовая настройка (под ключ)</div>
     <div class="setup-grid">
       <div class="setup-item">
         <div style="font-weight: 700;">Внедрение ВахтаПро</div>
         <div class="setup-price">299 000 ₸</div>
-        <div class="setup-desc">Установка, настройка 1С (обмен данными), RPA для enbek.kz, обучение HR и начальников участков, поддержка 1 месяц.</div>
+        <div class="setup-desc">Установка, настройка 1С (обмен данными), автоматизация enbek.kz, обучение HR и начальников участков, поддержка 1 месяц.</div>
       </div>
       <div class="setup-item">
         <div style="font-weight: 700;">Модуль удалённой подписи</div>
         <div class="setup-price">499 000 ₸</div>
-        <div class="setup-desc">Лицензия стороннего оператора ЭЦП (био-подпись, Face ID). Включает годовую техподдержку. Работник подписывает договоры с телефона — юридическая сила.</div>
+        <div class="setup-desc">Подключение сервиса электронной подписи документов — с телефона, юридически значимо по законодательству РК. Включает годовую техподдержку.</div>
       </div>
     </div>
     <div class="setup-note">
-      💡 Модуль подписи можно подключить сразу или позже. Без него система работает полностью, кроме удалённого подписания договоров.
+      💡 Модуль подписи можно подключить сразу или позже. Без него система работает в полном объёме, кроме удалённого подписания договоров.
+    </div>
+  </div>
+</div>
+
+
+<!-- Клиенты -->
+<div class="clients-section">
+  <div class="clients-label">Нам доверяют</div>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee-track">
+
+      <!-- БурОйлСнаб -->
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="#0f2d5e"/>
+          <rect width="56" height="56" rx="14" fill="url(#bo-grad)"/>
+          <!-- нефтяная вышка -->
+          <line x1="28" y1="10" x2="20" y2="42" stroke="#4a9eff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="28" y1="10" x2="36" y2="42" stroke="#4a9eff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="22" y1="22" x2="34" y2="22" stroke="#4a9eff" stroke-width="1.5"/>
+          <line x1="21" y1="30" x2="35" y2="30" stroke="#4a9eff" stroke-width="1.5"/>
+          <rect x="24" y="38" width="8" height="5" rx="1.5" fill="#2d6fc4"/>
+          <circle cx="28" cy="10" r="3" fill="#60aaff"/>
+          <!-- капля нефти -->
+          <path d="M40 18 C40 14 44 12 44 16 C44 18.5 42 20 40 18Z" fill="#60aaff" opacity=".6"/>
+          <defs>
+            <linearGradient id="bo-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#1a4a8a"/>
+              <stop offset="1" stop-color="#0a1e3d"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="client-name-wrap">
+          <span class="client-name">БурОйлСнаб</span>
+          <span class="client-type">Нефтесервис · Актау</span>
+        </div>
+      </div>
+
+      <!-- MiningShell -->
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="url(#ms-grad)"/>
+          <!-- горная порода + кирка -->
+          <polygon points="28,10 40,36 16,36" fill="none" stroke="#c4b5fd" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="28,16 36,32 20,32" fill="#7c3aed" opacity=".4"/>
+          <!-- кирка -->
+          <line x1="14" y1="44" x2="28" y2="30" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M28 30 L34 24 C36 22 38 23 37 25 L31 31Z" fill="#c4b5fd"/>
+          <circle cx="28" cy="10" r="2.5" fill="#e9d5ff"/>
+          <defs>
+            <linearGradient id="ms-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#3b1f6e"/>
+              <stop offset="1" stop-color="#1e0a40"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="client-name-wrap">
+          <span class="client-name">MiningShell</span>
+          <span class="client-type">Горнодобыча · Жезказган</span>
+        </div>
+      </div>
+
+      <!-- ICatering -->
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="url(#ic-grad)"/>
+          <!-- тарелка с крышкой -->
+          <ellipse cx="28" cy="36" rx="16" ry="4" fill="#fde68a" opacity=".3"/>
+          <path d="M13 32 Q28 20 43 32" stroke="#fde68a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="28" cy="32" rx="15" ry="2.5" fill="#fbbf24" opacity=".6"/>
+          <rect x="12" y="34" width="32" height="3" rx="1.5" fill="#f59e0b"/>
+          <!-- вилка и нож -->
+          <line x1="20" y1="14" x2="20" y2="28" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M18 14 L18 20 Q20 22 22 20 L22 14" stroke="#fde68a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="36" y1="14" x2="36" y2="28" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M34 14 Q36 18 38 14" stroke="#fde68a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- буква I -->
+          <rect x="26" y="14" width="4" height="14" rx="2" fill="#fff" opacity=".9"/>
+          <defs>
+            <linearGradient id="ic-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#92400e"/>
+              <stop offset="1" stop-color="#451a03"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="client-name-wrap">
+          <span class="client-name">ICatering</span>
+          <span class="client-type">Питание на объектах · Астана</span>
+        </div>
+      </div>
+
+      <!-- Avafood -->
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="url(#af-grad)"/>
+          <!-- листья / ростки -->
+          <path d="M28 42 L28 22" stroke="#86efac" stroke-width="2" stroke-linecap="round"/>
+          <path d="M28 30 C28 30 20 26 18 18 C26 18 30 26 28 30Z" fill="#4ade80" opacity=".8"/>
+          <path d="M28 26 C28 26 36 22 38 14 C30 14 26 22 28 26Z" fill="#22c55e"/>
+          <!-- тарелка -->
+          <ellipse cx="28" cy="42" rx="12" ry="3" fill="#86efac" opacity=".4"/>
+          <ellipse cx="28" cy="41" rx="12" ry="2" fill="#16a34a" opacity=".5"/>
+          <!-- A-образная форма -->
+          <path d="M20 38 L28 18 L36 38" stroke="#bbf7d0" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+          <defs>
+            <linearGradient id="af-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#14532d"/>
+              <stop offset="1" stop-color="#052e16"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="client-name-wrap">
+          <span class="client-name">Avafood</span>
+          <span class="client-type">Кейтеринг · Алматы</span>
+        </div>
+      </div>
+
+      <!-- дублируем для бесшовной прокрутки -->
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="#0f2d5e"/><rect width="56" height="56" rx="14" fill="url(#bo2-grad)"/>
+          <line x1="28" y1="10" x2="20" y2="42" stroke="#4a9eff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="28" y1="10" x2="36" y2="42" stroke="#4a9eff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="22" y1="22" x2="34" y2="22" stroke="#4a9eff" stroke-width="1.5"/>
+          <line x1="21" y1="30" x2="35" y2="30" stroke="#4a9eff" stroke-width="1.5"/>
+          <rect x="24" y="38" width="8" height="5" rx="1.5" fill="#2d6fc4"/>
+          <circle cx="28" cy="10" r="3" fill="#60aaff"/>
+          <path d="M40 18 C40 14 44 12 44 16 C44 18.5 42 20 40 18Z" fill="#60aaff" opacity=".6"/>
+          <defs><linearGradient id="bo2-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#1a4a8a"/><stop offset="1" stop-color="#0a1e3d"/></linearGradient></defs>
+        </svg>
+        <div class="client-name-wrap"><span class="client-name">БурОйлСнаб</span><span class="client-type">Нефтесервис · Актау</span></div>
+      </div>
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="url(#ms2-grad)"/>
+          <polygon points="28,10 40,36 16,36" fill="none" stroke="#c4b5fd" stroke-width="2" stroke-linejoin="round"/>
+          <polygon points="28,16 36,32 20,32" fill="#7c3aed" opacity=".4"/>
+          <line x1="14" y1="44" x2="28" y2="30" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M28 30 L34 24 C36 22 38 23 37 25 L31 31Z" fill="#c4b5fd"/>
+          <circle cx="28" cy="10" r="2.5" fill="#e9d5ff"/>
+          <defs><linearGradient id="ms2-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#3b1f6e"/><stop offset="1" stop-color="#1e0a40"/></linearGradient></defs>
+        </svg>
+        <div class="client-name-wrap"><span class="client-name">MiningShell</span><span class="client-type">Горнодобыча · Жезказган</span></div>
+      </div>
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="url(#ic2-grad)"/>
+          <ellipse cx="28" cy="36" rx="16" ry="4" fill="#fde68a" opacity=".3"/>
+          <path d="M13 32 Q28 20 43 32" stroke="#fde68a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="28" cy="32" rx="15" ry="2.5" fill="#fbbf24" opacity=".6"/>
+          <rect x="12" y="34" width="32" height="3" rx="1.5" fill="#f59e0b"/>
+          <line x1="20" y1="14" x2="20" y2="28" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M18 14 L18 20 Q20 22 22 20 L22 14" stroke="#fde68a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <line x1="36" y1="14" x2="36" y2="28" stroke="#fde68a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M34 14 Q36 18 38 14" stroke="#fde68a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <rect x="26" y="14" width="4" height="14" rx="2" fill="#fff" opacity=".9"/>
+          <defs><linearGradient id="ic2-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#92400e"/><stop offset="1" stop-color="#451a03"/></linearGradient></defs>
+        </svg>
+        <div class="client-name-wrap"><span class="client-name">ICatering</span><span class="client-type">Питание на объектах · Астана</span></div>
+      </div>
+      <div class="client-card">
+        <svg class="client-logo-svg" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="56" height="56" rx="14" fill="url(#af2-grad)"/>
+          <path d="M28 42 L28 22" stroke="#86efac" stroke-width="2" stroke-linecap="round"/>
+          <path d="M28 30 C28 30 20 26 18 18 C26 18 30 26 28 30Z" fill="#4ade80" opacity=".8"/>
+          <path d="M28 26 C28 26 36 22 38 14 C30 14 26 22 28 26Z" fill="#22c55e"/>
+          <ellipse cx="28" cy="42" rx="12" ry="3" fill="#86efac" opacity=".4"/>
+          <ellipse cx="28" cy="41" rx="12" ry="2" fill="#16a34a" opacity=".5"/>
+          <path d="M20 38 L28 18 L36 38" stroke="#bbf7d0" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+          <defs><linearGradient id="af2-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#14532d"/><stop offset="1" stop-color="#052e16"/></linearGradient></defs>
+        </svg>
+        <div class="client-name-wrap"><span class="client-name">Avafood</span><span class="client-type">Кейтеринг · Алматы</span></div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <!-- CTA -->
 <div class="section" style="padding-top:0;">
-  <div class="cta-wrap" style="background: var(--acc); border-radius: 24px; padding: 56px; text-align: center; color: #fff;">
-    <h2 style="font-family: 'Unbounded'; margin-bottom: 16px;">Посмотрите демо прямо сейчас</h2>
-    <p style="margin-bottom: 28px; opacity: 0.9;">Без регистрации. Нажимайте кнопки как начальник участка, HR и бухгалтер.</p>
-    <div style="display: flex; gap: 12px; justify-content: center;">
-      <a href="demo.html" class="btn-white" style="background: #fff; color: var(--acc2); padding: 12px 28px; border-radius: 40px; text-decoration: none; font-weight: 700;">Открыть демо</a>
-      <a href="mailto:support@lunatargetai.com" class="btn-outline-w" style="border: 1px solid rgba(255,255,255,0.5); color: #fff; padding: 12px 28px; border-radius: 40px; text-decoration: none;">Связаться и обсудить пилот</a>
+  <div class="cta-wrap">
+    <h2>Посмотрите демо прямо сейчас</h2>
+    <p>Без регистрации. Нажимайте кнопки как начальник участка, HR и бухгалтер.</p>
+    <div class="cta-btns">
+      <a href="demo.html" class="btn-white">Открыть демо</a>
+      <a href="javascript:void(0)" class="btn-outline-w" onclick="openModal()">Связаться и обсудить пилот</a>
     </div>
   </div>
 </div>
 
-<footer style="text-align: center; padding: 24px; font-size: 12px; color: var(--mut); border-top: 1px solid var(--bord);">
-  <p>ИП Алмагамбетова К.Ж. · ИИН 800530400759 · г. Астана · <a href="#" style="color: var(--acc);">Политика конфиденциальности</a> · <a href="https://wa.me/77053458458" style="color: var(--acc);">WhatsApp</a></p>
+<footer>
+  <p>ИП Алмагамбетова К.Ж. · г. Астана · <a href="#">Политика конфиденциальности</a> · <a href="https://wa.me/77053458458">WhatsApp</a></p>
 </footer>
 
+<script>
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    // reset
+    document.getElementById('modal-form-content').style.display = '';
+    document.getElementById('form-success').style.display = 'none';
+  }
+  function submitForm() {
+    const company = document.getElementById('f-company').value.trim();
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    if (!company || !name || !phone) {
+      alert('Пожалуйста, заполните название компании, имя и телефон.');
+      return;
+    }
+    document.getElementById('modal-form-content').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
 </body>
 </html>
